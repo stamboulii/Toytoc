@@ -18,6 +18,10 @@ framework:
     php_errors:
         log: true
 
+    serializer:
+        default_context:
+            enable_max_depth: true
+            yaml_indentation: 2
 when@test:
     framework:
         test: true
