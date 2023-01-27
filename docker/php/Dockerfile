@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-buster
+FROM php:8.2-fpm-buster
 ARG TIMEZONE
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     acl \
     && echo 'alias sf="php bin/console"' >> ~/.bashrc
 
-RUN docker-php-ext-configure gd --with-jpeg --with-freetype 
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 
 RUN docker-php-ext-install \
     pdo pdo_mysql zip xsl gd intl opcache exif mbstring
