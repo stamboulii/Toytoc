@@ -16,16 +16,16 @@ class Order
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $order_date = null;
+    private ?\DateTimeInterface $orderDate = null;
 
     #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -34,12 +34,12 @@ class Order
 
     public function getOrderDate(): ?\DateTimeInterface
     {
-        return $this->order_date;
+        return $this->orderDate;
     }
 
-    public function setOrderDate(\DateTimeInterface $order_date): self
+    public function setOrderDate(\DateTimeInterface $orderDate): self
     {
-        $this->order_date = $order_date;
+        $this->orderDate = $orderDate;
 
         return $this;
     }
@@ -58,24 +58,24 @@ class Order
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

@@ -15,7 +15,7 @@ class Transaction
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $transaction_date = null;
+    private ?\DateTimeInterface $transactionDate = null;
 
     #[ORM\Column]
     private ?int $status = null;
@@ -24,10 +24,10 @@ class Transaction
     private ?float $amount = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -36,12 +36,12 @@ class Transaction
 
     public function getTransactionDate(): ?\DateTimeInterface
     {
-        return $this->transaction_date;
+        return $this->transactionDate;
     }
 
-    public function setTransactionDate(\DateTimeInterface $transaction_date): self
+    public function setTransactionDate(\DateTimeInterface $transactionDate): self
     {
-        $this->transaction_date = $transaction_date;
+        $this->transactionDate = $transactionDate;
 
         return $this;
     }
@@ -72,24 +72,24 @@ class Transaction
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
