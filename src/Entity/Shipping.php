@@ -21,16 +21,16 @@ class Shipping
     private ?int $status = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $shipping_date = null;
+    private ?\DateTimeInterface $shippingDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $recieving_date = null;
+    private ?\DateTimeInterface $receivedDate = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -63,48 +63,48 @@ class Shipping
 
     public function getShippingDate(): ?\DateTimeInterface
     {
-        return $this->shipping_date;
+        return $this->shippingDate;
     }
 
-    public function setShippingDate(\DateTimeInterface $shipping_date): self
+    public function setShippingDate(\DateTimeInterface $shippingDate): self
     {
-        $this->shipping_date = $shipping_date;
+        $this->shippingDate = $shippingDate;
 
         return $this;
     }
 
-    public function getRecievingDate(): ?\DateTimeInterface
+    public function getReceivedDate(): ?\DateTimeInterface
     {
-        return $this->recieving_date;
+        return $this->receivedDate;
     }
 
-    public function setRecievingDate(?\DateTimeInterface $recieving_date): self
+    public function setReceivedDate(?\DateTimeInterface $receivedDate): self
     {
-        $this->recieving_date = $recieving_date;
+        $this->receivedDate = $receivedDate;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $created_at): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

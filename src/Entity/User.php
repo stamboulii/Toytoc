@@ -26,10 +26,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $first_name = null;
+    private ?string $firstName = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $last_name = null;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 50)]
     private ?string $country = null;
@@ -44,25 +44,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $phone = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $zip_code = null;
+    private ?int $zipCode = null;
 
     #[ORM\Column(length: 50)]
     private ?string $city = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    private ?string $reset_password_token = null;
+    private ?string $resetPasswordToken = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $reset_password_request_at = null;
+    private ?\DateTimeInterface $resetPasswordRequestAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $birthday = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?string
     {
@@ -131,24 +131,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFirstName(): ?string
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
-    public function setFirstName(string $first_name): self
+    public function setFirstName(string $firstName): self
     {
-        $this->first_name = $first_name;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->last_name;
+        return $this->lastName;
     }
 
-    public function setLastName(string $last_name): self
+    public function setLastName(string $lastName): self
     {
-        $this->last_name = $last_name;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -203,12 +203,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getZipCode(): ?int
     {
-        return $this->zip_code;
+        return $this->zipCode;
     }
 
-    public function setZipCode(?int $zip_code): self
+    public function setZipCode(?int $zipCode): self
     {
-        $this->zip_code = $zip_code;
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -227,24 +227,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getResetPasswordToken(): ?string
     {
-        return $this->reset_password_token;
+        return $this->resetPasswordToken;
     }
 
-    public function setResetPasswordToken(?string $reset_password_token): self
+    public function setResetPasswordToken(?string $resetPasswordToken): self
     {
-        $this->reset_password_token = $reset_password_token;
+        $this->resetPasswordToken = $resetPasswordToken;
 
         return $this;
     }
 
     public function getResetPasswordRequestAt(): ?\DateTimeInterface
     {
-        return $this->reset_password_request_at;
+        return $this->resetPasswordRequestAt;
     }
 
-    public function setResetPasswordRequestAt(?\DateTimeInterface $reset_password_request_at): self
+    public function setResetPasswordRequestAt(?\DateTimeInterface $resetPasswordRequestAt): self
     {
-        $this->reset_password_request_at = $reset_password_request_at;
+        $this->resetPasswordRequestAt = $resetPasswordRequestAt;
 
         return $this;
     }
@@ -263,24 +263,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
