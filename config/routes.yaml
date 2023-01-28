@@ -1,5 +1,6 @@
-controllers:
+admin_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Controller/Backoffice
+        namespace: App\Controller\Backoffice
     type: attribute
+    prefix: /admin

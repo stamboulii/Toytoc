@@ -4,6 +4,10 @@
 
     docker-compose up -d
 
+### Stop docker
+
+    docker-compose stop
+
 ### Enter to Docker php container
 
     docker-compose exec php bash
