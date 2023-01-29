@@ -15,9 +15,11 @@
         "jms/serializer-bundle": "^5.2",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.15",
+        "symfony/asset": "6.2.*",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
         "symfony/flex": "^2",
+        "symfony/form": "6.2.*",
         "symfony/framework-bundle": "6.2.*",
         "symfony/maker-bundle": "^1.48",
         "symfony/property-access": "6.2.*",
@@ -25,7 +27,8 @@
         "symfony/runtime": "6.2.*",
         "symfony/security-bundle": "6.2.*",
         "symfony/serializer": "6.2.*",
-        "symfony/yaml": "6.2.*"
+        "symfony/yaml": "6.2.*",
+        "symfonycasts/reset-password-bundle": "^1.16"
     },
     "config": {
         "allow-plugins": {

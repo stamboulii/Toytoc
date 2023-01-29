@@ -4,3 +4,5 @@ admin_controllers:
         namespace: App\Controller\Backoffice
     type: attribute
     prefix: /admin
+
+

@@ -3,6 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
+
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
     <form id="login-form" action="javascript:;" method="post">
         <h2 class="login-title">Log in</h2>
         <div class="form-group">

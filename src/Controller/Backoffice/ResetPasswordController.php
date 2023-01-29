@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ResetPasswordController extends AbstractController
 {
     #[Route('/request', name: 'request')]
-    public function request(): Response
+    public function request()
     {
         return $this->render('backoffice/reset_password/request.html.twig');
     }
