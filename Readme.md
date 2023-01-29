@@ -15,3 +15,8 @@
 ### Install vendors
 
     docker-compose exec php composer install
+
+### To run Php Symfony Command:
+Inside the docker container, just run 
+
+    sf
