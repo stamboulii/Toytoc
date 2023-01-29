@@ -12,7 +12,7 @@
     {% endblock %}
 
     <!-- GLOBAL MAINLY STYLES-->
-    <link href="./assets/Backoffice/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets/backoffice/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="./assets/Backoffice/font-awesome.min.css" rel="stylesheet" />
     <link href="./assets/Backoffice/themify-icons.css" rel="stylesheet" />
     <!-- THEME STYLES-->
@@ -24,7 +24,7 @@
 <body class="bg-silver-300">
 <div class="content">
     <div class="brand">
-        <a class="link" href="./assets/index.html">welcome</a>
+        <a class="link" href="index.html">welcome</a>
     </div>
     {% block body %}
     {% endblock %}
