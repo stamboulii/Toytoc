@@ -26,23 +26,37 @@
             <label class="ui-checkbox ui-checkbox-info">
                 <input type="checkbox">
                 <span class="input-span"></span>Remember me</label>
-            <a href="forgot_password.html">Forgot password?</a>
+            <a href="{{ path('app_backoffice_reset_password_request') }}">Forgot password?</a>
         </div>
         <div class="form-group">
             <button class="btn btn-info btn-block" type="submit">Login</button>
         </div>
-        <div class="social-auth-hr">
-            <span>Or login with</span>
-        </div>
-        <div class="text-center social-auth m-b-20">
-            <a class="btn btn-social-icon btn-twitter m-r-5" href="javascript:;"><i class="fa fa-twitter"></i></a>
-            <a class="btn btn-social-icon btn-facebook m-r-5" href="javascript:;"><i class="fa fa-facebook"></i></a>
-            <a class="btn btn-social-icon btn-google m-r-5" href="javascript:;"><i class="fa fa-google-plus"></i></a>
-            <a class="btn btn-social-icon btn-linkedin m-r-5" href="javascript:;"><i class="fa fa-linkedin"></i></a>
-            <a class="btn btn-social-icon btn-vk" href="javascript:;"><i class="fa fa-vk"></i></a>
-        </div>
-        <div class="text-center">Not a member?
-            <a class="color-blue" href="register.html">Create accaunt</a>
-        </div>
     </form>
 {% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- PAGE LEVEL SCRIPTS-->
+    <script type="text/javascript">
+        $(function() {
+            $('#login-form').validate({
+                errorClass: "help-block",
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true
+                    }
+                },
+                highlight: function(e) {
+                    $(e).closest(".form-group").addClass("has-error")
+                },
+                unhighlight: function(e) {
+                    $(e).closest(".form-group").removeClass("has-error")
+                },
+            });
+        });
+    </script>
+{% endblock javascripts %}
