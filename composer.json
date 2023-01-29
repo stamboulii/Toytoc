@@ -30,8 +30,7 @@
         "symfony/security-bundle": "6.2.*",
         "symfony/serializer": "6.2.*",
         "symfony/validator": "6.2.*",
-        "symfony/yaml": "6.2.*",
-        "symfonycasts/reset-password-bundle": "^1.16"
+        "symfony/yaml": "6.2.*"
     },
     "config": {
         "allow-plugins": {
