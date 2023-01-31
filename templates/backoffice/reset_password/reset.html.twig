@@ -1,0 +1,22 @@
+{% extends 'backoffice/base_not_secured.html.twig' %}
+
+{% block title %}Reset password{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <h3 class="m-t-10 m-b-10">Reset your password</h3>
+
+    <div class="form-group">
+        {{ form_row(form.password.first) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.password.second) }}
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info btn-block" type="submit">Submit</button>
+    </div>
+    <div class="form-group d-flex">
+        <a href="{{ path('app_backoffice_login') }}">Login</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock body %}
