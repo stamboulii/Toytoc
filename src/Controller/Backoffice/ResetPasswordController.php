@@ -10,7 +10,6 @@ use App\Repository\UserRepository;
 use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 use App\Form\Backoffice\User\ResetPasswordRequestType;
 use App\Form\Backoffice\User\ResetPasswordResetType;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route('/reset-password', name: 'app_backoffice_reset_password_')]

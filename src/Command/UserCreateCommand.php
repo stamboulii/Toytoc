@@ -6,38 +6,55 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\UserRepository;
 
 #[AsCommand(
-    name: 'app:user:create',
-    description: 'Add a short description for your command',
+    name       : 'app:user:create',
+    description: 'This command create a user in database',
 )]
 class UserCreateCommand extends Command
 {
+    public function __construct(
+        private readonly UserRepository $repository,
+        private readonly UserPasswordHasherInterface $passwordHasher
+    ) {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-           ;
+            ->addArgument('email', InputArgument::REQUIRED, 'User email')
+            ->addArgument('password', InputArgument::REQUIRED, 'User password')
+            ->addArgument('firstName', InputArgument::REQUIRED, 'User firstname')
+            ->addArgument('lastName', InputArgument::REQUIRED, 'User lastname');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        $user = (new User())
+            ->setEmail($input->getArgument('email'))
+            ->setFirstName($input->getArgument('firstName'))
+            ->setLastName($input->getArgument('lastName'))
+            ->setRoles(['ROLE_ADMIN']);
+
+        $user->setPassword($this->passwordHasher->hashPassword($user, $input->getArgument('password')));
+
+        try {
+            $this->repository->save($user, true);
+
+            $io->success(sprintf('The user %s has been successfully created !', $user->getFullName()));
+            return Command::SUCCESS;
+        } catch (\Exception $exception) {
+            $io->error($exception->getMessage());
+
+            return Command::FAILURE;
         }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
-        return Command::SUCCESS;
     }
 }

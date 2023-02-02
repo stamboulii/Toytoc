@@ -4,55 +4,40 @@ security:
 
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: id
-        # used to reload user from session & other features (e.g. switch_user)
+                property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+#            pattern: ^/
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
-            #secured_area:
-            # ...
             form_login:
-                username_parameter: email
-                password_parameter: password
                 login_path: app_backoffice_login
                 check_path: app_backoffice_login
-                # ...
-                csrf_parameter: _csrf_security_token
-                csrf_token_id: a_private_string
-                #default_target_path: 
-                #always_use_default_target_path: true
-                use_referer: true
-                #failure_path: login
+                enable_csrf: true
             remember_me:
-                secret:   '%kernel.secret%'
+                secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
-                path:     /
+                path: /admin/index
                 always_remember_me: true
-            logout: true
-       # hide_user_not_found: true   
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            logout:
+                path: app_backoffice_logout
+                target: app_backoffice_login
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+#         - { path: ^/admin, roles: ROLE_ADMIN }
+#         - { path: ^/, roles: ROLE_USER }
 
 when@test:
     security:
