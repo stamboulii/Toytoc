@@ -18,9 +18,17 @@ class SecurityController extends AbstractController
         return $this->render('./backoffice/security/login.html.twig',[ 
             'last_username' => $lastUsername,
            'error'         => $error,
-    ]);
+        ]);
     }
-    #[Route('/logout', name: 'app_backoffice_logout')]
+   
+   
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        return $this->render('security/login.html.twig', [
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+        ]);
+    }
+   // #[Route('/logout', name: 'app_backoffice_logout')]
     public function logout()
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');

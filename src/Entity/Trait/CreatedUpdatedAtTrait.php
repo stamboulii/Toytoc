@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait CreatedUpdatedAtTrait
 {
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 

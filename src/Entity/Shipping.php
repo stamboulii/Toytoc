@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Shipping
 {
     use Trait\CreatedUpdatedAtTrait;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

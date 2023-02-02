@@ -3,15 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\ToyRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: ToyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Toy
 {
     use Trait\CreatedUpdatedAtTrait;
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
