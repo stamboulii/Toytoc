@@ -18,6 +18,11 @@ framework:
     php_errors:
         log: true
 
+    assets:
+        enabled: true
+        version: '%env(APP_SECRET)%'
+        version_format: '%%s?v=%%s'
+
     serializer:
         default_context:
             enable_max_depth: true
