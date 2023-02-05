@@ -1,0 +1,60 @@
+{% extends 'backoffice/home/index.html.twig' %}
+
+
+{% block categories %}
+
+    <!-- START PAGE CONTENT-->
+    <div class="page-heading">
+        <h1 class="page-title">categories List</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#"><i class="la la-home font-20"></i></a>
+            </li>
+        </ol>
+    </div>
+    <div class="page-content fade-in-up">
+        <div class="alert bg-white">
+            <h4>You may add category from here.</h4>
+            <p>
+                <a class="btn btn-success" href="{{ path('app_category_new') }}" target="_blank">Add category</a>
+            </p>
+        </div>
+        <div class="ibox">
+            <div class="ibox-body">
+                <table class="table table-striped table-bordered table-hover" id="example-table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th width="240px">Action</th>
+                    </tr>
+                    </thead>
+                    {% for categories in category %}
+                    <tbody>
+                    <tr>
+                        <td>{{ categories.name }}</td>
+                        <td>{{ categories.description}}</td>
+                        <td>
+                            <form method="post" action="{{ path('app_category_delete', {'id': categories.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+                                <a
+                                        class="btn btn-outline-success"
+                                        href="{{ path('app_category_edit', {'id': categories.id}) }}">
+                                    Edit
+                                </a>
+
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categories.id) }}">
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock categories%}

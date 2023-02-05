@@ -58,7 +58,7 @@ class UserCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('backoffice/users/users.html.twig', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_users', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backoffice/users/edit.html.twig', [
@@ -76,39 +76,7 @@ class UserCrudController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_users', [], Response::HTTP_SEE_OTHER);
     }
-//    public static function getEntityFqcn(): string
-//    {
-//        return User::class;
-//    }
-//    public function configureCrud(Crud $crud): Crud
-//    {
-//        return parent::configureCrud($crud)
-//            ->setDefaultSort([
-//                'askedBy.enabled' => 'DESC',
-//                'createdAt' => 'DESC',
-//            ]);
-//    }
-//
-//    public function configureFields(string $pageName): iterable
-//    {
-//            yield IdField::new('id')
-//            ->onlyOnIndex();
-//            yield EmailField::new('email');
-//            yield TextField::new('fullName')
-//            ->hideOnForm();
-//            yield DateField::new('createdAt');
-//            yield ArrayField::new('roles');
-//
-//    }
 
-
-//    public function createEntity(string $entityFqcn): User
-//    {
-//        $user = new user();
-//        $user->createdBy($this->getUser());
-//
-//        return $user;
-//    }
 
 
 }

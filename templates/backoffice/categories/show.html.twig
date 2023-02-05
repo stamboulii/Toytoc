@@ -1,0 +1,20 @@
+{% extends 'backoffice/home/index.html.twig' %}
+{% block showCategory %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">{{ category.name }} Details</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="#">
+                    View All categories
+                </a>
+            </div>
+            <div class="card-body">
+                <b class="text-muted">Name:</b>
+                <p>{{ category.name }}</p>
+                <b class="text-muted">Description:</b>
+                <p>{{ category.Description }}</p>
+
+            </div>
+        </div>
+    </div>
+{% endblock showCategory %}
