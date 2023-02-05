@@ -1,0 +1,50 @@
+
+{% extends 'backoffice/home/index.html.twig' %}
+
+{% block editUser %}
+
+<div class="ibox">
+    <div class="ibox-head">
+        <div class="ibox-title">Edit User</div>
+        <div class="ibox-tools">
+            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+        </div>
+    </div>
+    <div class="ibox-body">
+        {{ form_start(form) }}
+        <div class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    {{ form_row(form.firstname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    {{ form_row(form.lastname, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    {{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10 ml-sm-auto">
+                    <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+</div>
+{% endblock editUser %}

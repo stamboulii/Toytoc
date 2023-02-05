@@ -1,0 +1,22 @@
+{% extends 'backoffice/home/index.html.twig' %}
+{% block showUser %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">{{ user.firstname }} Details</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="#">
+                    View All users
+                </a>
+            </div>
+            <div class="card-body">
+                <b class="text-muted">Name:</b>
+                <p>{{ user.firstname }}</p>
+                <b class="text-muted">Description:</b>
+                <p>{{ user.lastname }}</p>
+                <b class="text-muted">email</b>
+                <p>{{ user.email}}</p>
+
+            </div>
+        </div>
+    </div>
+{% endblock showUser %}
