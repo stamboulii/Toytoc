@@ -13,6 +13,10 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'app_backoffice_login', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_backoffice_index');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 

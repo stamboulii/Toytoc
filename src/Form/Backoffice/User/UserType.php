@@ -16,48 +16,44 @@ use Symfony\Component\Form\CallbackTransformer;
 
 class UserType extends AbstractType
 {
-
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder
-                ->add('firstname',TextType::class)
-                ->add('lastname',TextType::class)
-                ->add('email',EmailType::class)
-                ->add('password',PasswordType::class)
-                ->add('country',TextType::class)
-                ->add('address',TextType::class)
-                ->add('phone',TextType::class)
-                ->add('zipCode',NumberType::class)
-                ->add('city',TextType::class)
-                ->add('birthday',DateType::class)
-                ->add('roles', ChoiceType::class, [
-                    'required' => true,
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices'  => [
-                        'Normal User' => 'ROLE_USER',
-                        'Admin' => 'ROLE_ADMIN',
-                    ]
-                ])
-            ;
-            $builder->get('roles')
-                ->addModelTransformer(new CallbackTransformer(
-                    function ($rolesArray) {
-                        // transform the array to a string
-                        return count($rolesArray)? $rolesArray[0]: null;
-                    },
-                    function ($rolesString) {
-                        // transform the string back to an array
-                        return [$rolesString];
-                    }
-                ));
-        }
-
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            $resolver->setDefaults([
-                'data_class' => User::class,
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('password', PasswordType::class)
+            ->add('country', TextType::class)
+            ->add('address', TextType::class)
+            ->add('phone', TextType::class)
+            ->add('zipCode', NumberType::class)
+            ->add('city', TextType::class)
+            ->add('birthday', DateType::class)
+            ->add('roles', ChoiceType::class, [
+                'required' => true,
+                'multiple' => false,
+                'expanded' => false,
+                'choices'  => [
+                    'Normal User' => 'ROLE_USER',
+                    'Admin'       => 'ROLE_ADMIN',
+                ]
             ]);
-        }
+        $builder->get('roles')->addModelTransformer(new CallbackTransformer(
+            function ($rolesArray) {
+                // transform the array to a string
+                return count($rolesArray) ? $rolesArray[0] : null;
+            },
+            function ($rolesString) {
+                // transform the string back to an array
+                return [$rolesString];
+            }
+        ));
+    }
 
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
+    }
 }

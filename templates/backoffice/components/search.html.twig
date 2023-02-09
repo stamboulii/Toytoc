@@ -1,8 +1,13 @@
 {{ form_start(form) }}
-<div class="input-group">
-    {{ form_widget(form.q) }}
-    <button type="submit" class="btn btn-outline-primary">search</button>
+<div class="row">
+
+    {% for child in form %}
+        <div class="col-sm-6 form-group">
+            {{ form_label(child) }}
+            {{ form_widget(child) }}
+        </div>
+    {% endfor %}
 </div>
+
+<button type="submit" class="btn btn-outline-primary">search</button>
 {{ form_end(form) }}
-
-

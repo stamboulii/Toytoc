@@ -1,0 +1,53 @@
+{# Convert paginator into a set of paginatorLimit, paginatorCount, paginatorOffset values #}
+{% if paginator is defined and paginator is not null %}
+    {% set paginatorLimit = paginator.query.getMaxResults() %}
+    {% set paginatorCount = paginator.count() %}
+    {% set paginatorOffset = paginator.query.getFirstResult() %}
+{% endif %}
+
+{# Test if a paginator is required #}
+{% if paginatorCount is defined and paginatorLimit is defined and paginatorOffset is defined %}
+    {# Analyze values to define page and max #}
+    {% if paginatorLimit > 0 %}
+        {% set page = (paginatorOffset / paginatorLimit) + 1 %}
+        {% set max = 1 + ((paginatorCount - 1) // paginatorLimit) %}
+    {% else %}
+        {% set page,max = 1,0 %}
+    {% endif %}
+
+    {# Set default values #}
+    {% set dem,demDisp1,demDisp2,route = 2,0,0,app.request.attributes.get('_route') %}
+    {% set parameters = app.request.query.all()|merge(app.request.attributes.get('_route_params')) %}
+    {% set parameters = parameters|merge(order_query_attributes()) %}
+
+    {# Display this pager only when there is at least one item #}
+    {% if max > 0 %}
+        <nav aria-label="...">
+            <ul class="pagination">
+                {# Display each page #}
+                {% for i in 1..max %}
+                    {% if i == page %}
+                        {# Current page #}
+                        <li class="page-item active"><a class="page-link" href="{{ path(route,parameters|merge({page:i})) }}">{{ i }}</a></li>
+
+                    {% elseif i > dem and i < page - dem %}
+                        {# "..." before current page #}
+                        {% if 0 == demDisp1 %}
+                            <li><span>...</span></li>
+                            {% set demDisp1 = 1 %}
+                        {% endif %}
+                    {% elseif i > page + dem and i < max - dem %}
+                        {# "..." after current page #}
+                        {% if 0 == demDisp2 %}
+                            <li><span>...</span></li>
+                            {% set demDisp2 = 1 %}
+                        {% endif %}
+                    {% else %}
+                        {# Other pages #}
+                        <li class="page-item"><a class="page-link" href="{{ path(route,parameters|merge({page:i})) }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endif %}

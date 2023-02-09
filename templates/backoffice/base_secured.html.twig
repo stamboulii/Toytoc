@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>Backoffice TOY TOC | {% block title %}{% endblock %}</title>
+    <!-- GLOBAL MAINLY STYLES-->
+    <link href="{{ asset('assets/backoffice/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/backoffice/css/font-awesome.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/backoffice/css/themify-icons.css') }}" rel="stylesheet" />
+    <!-- THEME STYLES-->
+    <link href="{{ asset('assets/backoffice/css/main.css') }}" rel="stylesheet" />
+    <!-- PAGE LEVEL STYLES-->
+    <link href="{{asset('assets/backoffice/css/jquery-jvectormap-2.0.3.css')}}" rel="stylesheet" />
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+</head>
+
+<body class="fixed-navbar">
+<div class="page-wrapper">
+    <!-- START HEADER-->
+    <header class="header">
+        <div class="page-brand">
+            <a class="link" href="{{ path('app_backoffice_index') }}">
+                    <span class="brand">Toy
+                        <span class="brand-tip">Toc</span>
+                    </span>
+                <span class="brand-mini">TT</span>
+            </a>
+        </div>
+        <div class="flexbox flex-1">
+            <!-- START TOP-LEFT TOOLBAR-->
+            <ul class="nav navbar-toolbar">
+                <li>
+                    <a class="nav-link sidebar-toggler js-sidebar-toggler"><i class="ti-menu"></i></a>
+                </li>
+                <li>
+                    <form class="navbar-search" action="javascript:;">
+                        <div class="rel">
+                            <span class="search-icon"><i class="ti-search"></i></span>
+                            <input class="form-control" placeholder="Search here...">
+                        </div>
+                    </form>
+                </li>
+            </ul>
+            <!-- END TOP-LEFT TOOLBAR-->
+            <!-- START TOP-RIGHT TOOLBAR-->
+            <ul class="nav navbar-toolbar">
+                <li class="dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
+                        <img src="{{asset('assets/backoffice/img/admin-avatar.png')}}" />
+                        <span></span>Admin<i class="fa fa-angle-down m-l-5"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Profile</a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-cog"></i>Settings</a>
+                        <li class="dropdown-divider"></li>
+                        <a class="dropdown-item" href="{{ path('app_backoffice_logout') }}"><i class="fa fa-power-off"></i>Logout</a>
+                    </ul>
+                </li>
+            </ul>
+            <!-- END TOP-RIGHT TOOLBAR-->
+        </div>
+    </header>
+    <!-- END HEADER-->
+    <!-- START SIDEBAR-->
+    <nav class="page-sidebar" id="sidebar">
+        <div id="sidebar-collapse">
+            <div class="admin-block d-flex">
+                <div>
+                    <img src="{{asset('assets/backoffice/img/admin-avatar.png')}}" width="45px" />
+                </div>
+                <div class="admin-info">
+                    <div class="font-strong">James Brown</div><small>Administrator</small></div>
+            </div>
+            <ul class="side-menu metismenu">
+                <li>
+                    <a class="active" href="#"><i class="sidebar-item-icon fa fa-th-large"></i>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+                <li class="heading">FEATURES</li>
+                <li>
+                    <a href="{{ path('app_backoffice_user_index') }}"><i class="sidebar-item-icon fa fa-user"></i>
+                        <span class="nav-label">Users</span></a>
+                </li>
+                <li>
+                    <a href="{{ path('app_backoffice_categories') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
+                        <span class="nav-label">categories</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- END SIDEBAR-->
+    <div class="content-wrapper">
+        <!-- START PAGE CONTENT-->
+        <div class="page-content fade-in-up">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        <!-- END PAGE CONTENT-->
+        <footer class="page-footer">
+            <div class="font-13"> © <b>ToyToc</b> - All rights reserved.</div>
+
+            <div class="to-top"><i class="fa fa-angle-double-up"></i></div>
+        </footer>
+    </div>
+</div>
+<!-- BEGIN THEME CONFIG PANEL-->
+<div class="theme-config">
+    <div class="theme-config-toggle"><i class="fa fa-cog theme-config-show"></i><i class="ti-close theme-config-close"></i></div>
+    <div class="theme-config-box">
+        <div class="text-center font-18 m-b-20">SETTINGS</div>
+        <div class="font-strong">LAYOUT OPTIONS</div>
+        <div class="check-list m-b-20 m-t-10">
+            <label class="ui-checkbox ui-checkbox-gray">
+                <input id="_fixedNavbar" type="checkbox" checked>
+                <span class="input-span"></span>Fixed navbar</label>
+            <label class="ui-checkbox ui-checkbox-gray">
+                <input id="_fixedlayout" type="checkbox">
+                <span class="input-span"></span>Fixed layout</label>
+            <label class="ui-checkbox ui-checkbox-gray">
+                <input class="js-sidebar-toggler" type="checkbox">
+                <span class="input-span"></span>Collapse sidebar</label>
+        </div>
+        <div class="font-strong">LAYOUT STYLE</div>
+        <div class="m-t-10">
+            <label class="ui-radio ui-radio-gray m-r-10">
+                <input type="radio" name="layout-style" value="" checked="">
+                <span class="input-span"></span>Fluid</label>
+            <label class="ui-radio ui-radio-gray">
+                <input type="radio" name="layout-style" value="1">
+                <span class="input-span"></span>Boxed</label>
+        </div>
+
+
+    </div>
+</div>
+<!-- END THEME CONFIG PANEL-->
+<!-- BEGIN PAGA BACKDROPS-->
+<div class="sidenav-backdrop backdrop"></div>
+<div class="preloader-backdrop">
+    <div class="page-preloader">Loading</div>
+</div>
+<!-- END PAGA BACKDROPS-->
+<!-- CORE PLUGINS-->
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/jquery.min.js')}}" ></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/popper.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/metisMenu.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/jquery.slimscroll.min.js') }}" ></script>
+<!-- PAGE LEVEL PLUGINS-->
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/Chart.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/jquery-jvectormap-2.0.3.min.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/jquery-jvectormap-world-mill-en.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/jquery-jvectormap-us-aea-en.js') }}" ></script>
+<!-- CORE SCRIPTS-->
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/app.min.js') }}" ></script>
+<!-- PAGE LEVEL SCRIPTS-->
+<script type="text/javascript" src="{{ asset('assets/backoffice/js/dashboard_1_demo.js') }}" ></script>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>
