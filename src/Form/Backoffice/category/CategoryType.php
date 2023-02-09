@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Backoffice\category;
+namespace App\Form\Backoffice\Category;
 
 
 use App\Entity\Category;

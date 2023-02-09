@@ -41,14 +41,6 @@ class CategoryCrudController extends AbstractController
         ]);
     }
 
-//    #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-//    public function show(Category $category): Response
-//    {
-//
-//        return $this->render('backoffice/categories/show.html.twig', [
-//            'category' => $category,
-//        ]);
-//    }
 
     #[Route('/{id}/edit', name: 'app_category_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response

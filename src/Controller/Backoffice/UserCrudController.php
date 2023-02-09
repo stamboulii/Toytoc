@@ -3,6 +3,8 @@
 namespace App\Controller\Backoffice;
 
 use App\Entity\User;
+use App\Form\Backoffice\User\SearchUsers;
+use App\Form\Backoffice\User\UserFilterType;
 use App\Form\Backoffice\User\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,13 +16,32 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/users')]
 class UserCrudController extends AbstractController
 {
-    #[Route('/', name: 'app_backoffice_users' )]
-    public function index(UserRepository $userRepository): Response
+    #[Route('/', name: 'app_backoffice_users' , methods: ['GET'])]
+    public function index(UserRepository $userRepository, Request $request): Response
     {
+        $cr=$this->getUser();
+        $searchUsers = new SearchUsers();
+        $form = $this->createForm(UserFilterType::class,$searchUsers
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            //dd($data->q);
+            $searchUsers->page = $request->query->getInt('page',1);
+            $users = $userRepository->findBySearch($searchUsers);
+            dd($users);
+
+            return $this->render('backoffice/users/users.html.twig', [
+                'form' => $form,
+                'users' => $users
+            ]);
+        }
+
         return $this->render('backoffice/users/users.html.twig', [
-            'users'=> $userRepository->findAll()
+            'form' => $form->createView(),
+            'users' => $userRepository->findAllExcept($cr)
         ]);
     }
+
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository): Response
     {
@@ -70,13 +91,11 @@ class UserCrudController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
 
         return $this->redirectToRoute('app_backoffice_users', [], Response::HTTP_SEE_OTHER);
     }
-
-
 
 }
