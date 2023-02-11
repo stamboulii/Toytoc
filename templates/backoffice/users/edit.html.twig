@@ -1,80 +1,73 @@
+{% extends 'backoffice/base_secured.html.twig' %}
 
-{% extends 'backoffice/home/index.html.twig' %}
+{% block body %}
+    <div class="ibox">
+        <div class="ibox-head">
+            <div class="ibox-title">Edit User</div>
+            <div class="ibox-tools">
+                <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+        </div>
+        <div class="ibox-body">
+            {{ form_start(form) }}
+            <div class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.country, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.zipCode, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.city, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.roles, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 ml-sm-auto">
+                        <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
+                    </div>
+                </div>
 
-{% block editUser %}
+            </div>
+            {{ form_end(form) }}
 
-<div class="ibox">
-    <div class="ibox-head">
-        <div class="ibox-title">Edit User</div>
-        <div class="ibox-tools">
-            <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
         </div>
     </div>
-    <div class="ibox-body">
-        {{ form_start(form) }}
-        <div class="form-horizontal" id="form-sample-1" method="post" novalidate="novalidate">
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.firstname, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.lastname, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.country, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.zipCode, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.city, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_row(form.roles, {'attr': {'class': 'form-control'}}) }}
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10 ml-sm-auto">
-                    <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
-                </div>
-            </div>
-
-        </div>
-        {{ form_end(form) }}
-
-    </div>
-</div>
-{% endblock editUser %}
+{% endblock %}

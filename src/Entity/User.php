@@ -151,7 +151,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->country;
     }
 
-    public function setCountry(string $country): self
+    public function setCountry(?string $country): self
     {
         $this->country = $country;
 
@@ -163,7 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
@@ -187,7 +187,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phone;
     }
 
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
@@ -211,7 +211,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
@@ -247,7 +247,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->birthday;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): self
+    public function setBirthday(?\DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
 

@@ -18,7 +18,7 @@ class UserController extends AbstractController
     #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request): Response
     {
-        $filters = ['user' => $this->getUser()];
+        $filters = ['user' => $this->getUser()->getId()];
         $form = $this->createForm(UserFilterType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
@@ -39,7 +39,7 @@ class UserController extends AbstractController
     public function new(Request $request, UserRepository $userRepository): Response
     {
         $user = new User();
-        $form = $this->createForm(userType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,7 +72,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_backoffice_user_edit', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backoffice/users/edit.html.twig', [

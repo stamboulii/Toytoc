@@ -22,13 +22,24 @@ class UserType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
-            ->add('country', TextType::class)
-            ->add('address', TextType::class)
-            ->add('phone', TextType::class)
-            ->add('zipCode', NumberType::class)
-            ->add('city', TextType::class)
-            ->add('birthday', DateType::class)
+            ->add('country', TextType::class, [
+                'required' => false,
+            ])
+            ->add('address', TextType::class, [
+                'required' => false,
+            ])
+            ->add('phone', TextType::class, [
+                'required' => false,
+            ])
+            ->add('zipCode', NumberType::class, [
+                'required' => false,
+            ])
+            ->add('city', TextType::class, [
+                'required' => false,
+            ])
+            ->add('birthday', DateType::class, [
+                'required' => false,
+            ])
             ->add('roles', ChoiceType::class, [
                 'required' => true,
                 'multiple' => false,

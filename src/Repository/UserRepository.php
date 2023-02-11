@@ -75,19 +75,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $queryBuilder = $this->createQueryBuilder('user');
 
         if (isset($filters['user']) && !empty($filters['user'])) {
-            $queryBuilder->andWhere('user.id != :user')->setParameter('user', $filters['user']);
+            $queryBuilder->andWhere('user.id NOT IN (:user)')->setParameter('user', (array)$filters['user']);
         }
 
+        $orX = $queryBuilder->expr()->orX();
         if (isset($filters['firstName']) && !empty($filters['firstName'])) {
-            $queryBuilder->orWhere('user.firstName = :firstName')->setParameter('firstName', $filters['firstName']);
+            $orX->add('user.firstName LIKE :firstName');
+            $queryBuilder->setParameter('firstName', '%' . $filters['firstName'] . '%');
         }
 
         if (isset($filters['lastName']) && !empty($filters['lastName'])) {
-            $queryBuilder->orWhere('user.lastName = :lastName')->setParameter('lastName', $filters['lastName']);
+            $orX->add('user.lastName LIKE :lastName');
+            $queryBuilder->setParameter('lastName', '%' . $filters['lastName'] . '%');
         }
 
         if (isset($filters['email']) && !empty($filters['email'])) {
-            $queryBuilder->orWhere('user.email = :email')->setParameter('email', $filters['email']);
+            $orX->add('user.email LIKE :email');
+            $queryBuilder->setParameter('email', '%' . $filters['email'] . '%');
+        }
+
+        if ($orX->count() !== 0) {
+            $queryBuilder->andWhere($orX);
         }
 
         PaginatorHelper::applyPaginator($queryBuilder, $limit, $offset);
