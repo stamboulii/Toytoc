@@ -7,12 +7,16 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Trait\CreatedUpdatedAtTrait;
+
+    public const ROLE_PARENT = 'ROLE_PARENT';
+    public const ROLE_ADMIN  = 'ROLE_ADMIN';
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -22,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
@@ -32,6 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\Country()]
     private ?string $country = null;
 
     #[ORM\Column(length: 100, nullable: true)]
@@ -254,5 +259,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public static function newParent(): self
+    {
+        return (new self())->setRoles([static::ROLE_PARENT]);
+    }
 
+    public static function newAdmin(): self
+    {
+        return (new self())->setRoles([static::ROLE_ADMIN]);
+    }
 }

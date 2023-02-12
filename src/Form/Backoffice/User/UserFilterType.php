@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class UserFilterType extends AbstractType
 {
@@ -37,9 +36,6 @@ class UserFilterType extends AbstractType
                 'required' => false,
             ])
             ->add('city', TextType::class, [
-                'required' => false,
-            ])
-            ->add('birthday', DateType::class, [
                 'required' => false,
             ]);
 

@@ -61,11 +61,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function getUserByValidToken(string $token): ?User
     {
-        $now = (new \DateTime())->modify('-1 days');
         return $this->createQueryBuilder('user')
                     ->where('user.resetPasswordToken = :token')
                     ->andWhere('user.resetPasswordRequestAt >= :now')
-                    ->setParameters(['token' => $token, 'now' => $now])
+                    ->setParameters(['token' => $token, 'now' => (new \DateTime())->modify('-1 days')])
                     ->getQuery()
                     ->getOneOrNullResult();
     }
@@ -76,6 +75,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         if (isset($filters['user']) && !empty($filters['user'])) {
             $queryBuilder->andWhere('user.id NOT IN (:user)')->setParameter('user', (array)$filters['user']);
+        }
+
+        if (isset($filters['roles']) && !empty($filters['roles'])) {
+            $queryBuilder->andWhere('user.roles like :roles')->setParameter('roles', '%' . $filters['roles'] . '%');
         }
 
         $orX = $queryBuilder->expr()->orX();
