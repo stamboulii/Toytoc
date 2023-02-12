@@ -4,15 +4,16 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Collection;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Category
 {
-   use Trait\CreatedUpdatedAtTrait;
+    use Trait\CreatedUpdatedAtTrait;
 
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -50,4 +51,5 @@ class Category
 
         return $this;
     }
+
 }

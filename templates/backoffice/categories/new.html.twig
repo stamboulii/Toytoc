@@ -1,6 +1,5 @@
-{% extends 'backoffice/home/index.html.twig' %}
-
-{% block newCategory %}
+{% extends 'backoffice/base_secured.html.twig' %}
+{% block body %}
     <div class="ibox">
         <div class="ibox-head">
             <div class="ibox-title">Add Category</div>
@@ -32,4 +31,4 @@
             {{ form_end(form) }}
         </div>
     </div>
-{% endblock newCategory %}
+{% endblock %}

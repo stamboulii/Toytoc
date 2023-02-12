@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Helper\PaginatorHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,4 +40,33 @@ class CategoryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function getCategoryByFiltersAndPaginator(array $filters = [], array $sort = null, int $limit = null, int $offset = null): array|Paginator
+    {
+        $queryBuilder = $this->createQueryBuilder('category');
+
+
+        $orX = $queryBuilder->expr()->orX();
+        if (isset($filters['name']) && !empty($filters['name'])) {
+            $orX->add('category.name LIKE :name');
+            $queryBuilder->setParameter('name', '%' . $filters['name'] . '%');
+        }
+
+        if (isset($filters['description']) && !empty($filters['description'])) {
+            $orX->add('category.description LIKE :description');
+            $queryBuilder->setParameter('description', '%' . $filters['description'] . '%');
+        }
+
+
+        if ($orX->count() !== 0) {
+            $queryBuilder->andWhere($orX);
+        }
+
+        PaginatorHelper::applyPaginator($queryBuilder, $limit, $offset);
+        PaginatorHelper::applyOrder($queryBuilder, $sort);
+
+        return PaginatorHelper::results($queryBuilder);
+    }
+
+
+
 }
