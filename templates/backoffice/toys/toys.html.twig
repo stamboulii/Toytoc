@@ -7,6 +7,12 @@
  <div class="page-content fade-in-up">
     <div class="alert bg-white">
         <h4>You may add Toy from here.</h4>
+
+        {% if app.request.query.get('user_id') != null %}
+            <a class="btn btn-success" href="{{ path('app_backoffice_user_index') }}" >Back to users</a>
+        {% elseif app.request.query.get('user_id') != null %}
+            <a class="btn btn-success" href="{{ path('app_backoffice_categories_index') }}" >Back to categories</a>
+        {% endif %}
         <p>
             <a class="btn btn-success" href="{{ path('app_backoffice_toy_new') }}" >Add Toy</a>
         </p>

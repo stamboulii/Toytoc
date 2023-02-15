@@ -20,12 +20,15 @@ class ToyController extends AbstractController
     #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(ToyRepository $toyRepository, Request $request): Response
     {
-        $filters = ['toy' => $toyRepository->findAll()];
+        $filters = [
+            'user_id' => $request->query->get('user_id'),
+            'category_id' => $request->query->get('category_id'),
+        ];
         $form = $this->createForm(ToyFilterType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
         }
-        return $this->render('backoffice/Toys/toys.html.twig', [
+        return $this->render('backoffice/toys/toys.html.twig', [
             'form' => $form->createView(),
             'toy' => $toyRepository->getToyByFiltersAndPaginator(
                 $filters,
@@ -49,7 +52,7 @@ class ToyController extends AbstractController
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('backoffice/Toys/new.html.twig', [
+        return $this->render('backoffice/toys/new.html.twig', [
             'toy' => $toy,
             'form' => $form,
 
@@ -69,7 +72,7 @@ class ToyController extends AbstractController
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('backoffice/Toys/edit.html.twig', [
+        return $this->render('backoffice/toys/edit.html.twig', [
             'toy' => $toy,
             'form' => $form,
         ]);
@@ -84,13 +87,4 @@ class ToyController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
     }
-
-//    public function show(ManagerRegistry $doctrine, int $id): Response
-//    {
-//        $toy = $doctrine->getRepository(Toy::class)->findOneByIdJoinedToCategory($id);
-//
-//        $user = $toy->getUser();
-//
-//        return $this->;
-//    }
 }

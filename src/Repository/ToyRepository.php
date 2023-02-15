@@ -45,6 +45,13 @@ class ToyRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('toy');
 
+        if (null !== $filters['user_id']) {
+            $queryBuilder->andWhere('toy.user = :user')->setParameter('user', $filters['user_id']);
+        }
+
+        if (null !== $filters['category_id']) {
+            $queryBuilder->andWhere('toy.User = :category')->setParameter('category', $filters['user_id']);
+        }
 
         $orX = $queryBuilder->expr()->orX();
         if (isset($filters['state']) && !empty($filters['state'])) {

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/categories',name:'app_backoffice_categories_')]
 class CategoryCrudController extends AbstractController
 {
-    #[Route('/category', name: 'category', methods: ['GET'])]
+    #[Route('/category', name: 'index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository,Request $request): Response
     {
 
@@ -24,9 +24,9 @@ class CategoryCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
         }
-        return $this->render('backoffice/categories/categories.html.twig', [
+        return $this->render('backoffice/categories/index.html.twig', [
             'form'  => $form->createView(),
-            'category' => $categoryRepository->getCategoryByFiltersAndPaginator(
+            'categories' => $categoryRepository->getCategoryByFiltersAndPaginator(
                 $filters,
                 HttpQueryHelper::getOrderBy($request),
                 HttpQueryHelper::getLimit($request),
@@ -82,7 +82,4 @@ class CategoryCrudController extends AbstractController
 
         return $this->redirectToRoute('app_backoffice_categories_delete', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
 }
