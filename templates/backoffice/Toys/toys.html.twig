@@ -1,0 +1,44 @@
+{% extends 'backoffice/base_secured.html.twig' %}
+
+{% block body %}
+    <div class="page-heading">
+        <h1 class="page-title">Toys List</h1>
+    </div>
+ <div class="page-content fade-in-up">
+    <div class="alert bg-white">
+        <h4>You may add Toy from here.</h4>
+        <p>
+            <a class="btn btn-success" href="{{ path('app_backoffice_toy_new') }}" >Add Toy</a>
+        </p>
+        <div class="ibox-body">
+            {{ include('backoffice/components/search.html.twig') }}
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card-group">
+                        {% for toys in toy %}
+                        <div class="card">
+                            <img class="card-img-top" src="{{ asset('assets/backoffice/img/image.png') }}" />
+                            <div class="card-body">
+                                <h5 class="card-title">{{ toys.price }}</h5>
+                                <div>{{ toys.state }}</div>
+                            </div>
+                            <div class="card-footer">
+                                <form method="post" action="{{ path('app_backoffice_toy_delete', {'id': toys.id}) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <a href="{{ path('app_backoffice_toy_edit', {'id': toys.id}) }}" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Edit</a>
+
+                                <input  type="hidden" name="_token" value="{{ csrf_token('delete' ~ toys.id) }}">
+                                <button class="btn btn-default btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {{ include('backoffice/components/pagination.html.twig', {'paginator' : toy}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -30,22 +32,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Length(min: 5, max: 50)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\Length(min: 1, max: 50)]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 50, nullable: true)]
     #[Assert\Country()]
     private ?string $country = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(nullable: true)]
+    #[Assert\Length(min: 5, max: 100)]
     private ?string $address = null;
 
     #[ORM\Column(length: 50, unique: true)]
+    #[Assert\Email()]
     private ?string $email = null;
 
-    #[ORM\Column(length: 8, nullable: true)]
+    #[ORM\Column( nullable: true)]
+    #[Assert\Length(min: 5, max: 20)]
     private ?string $phone = null;
 
     #[ORM\Column(nullable: true)]
@@ -62,6 +69,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthday = null;
+
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Toy::class)]
+    private Collection $toys;
+
+    public function __construct()
+    {
+        $this->toys = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -268,4 +283,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (new self())->setRoles([static::ROLE_ADMIN]);
     }
+
+    /**
+     * @return Collection<int, Toy>
+     */
+    public function getToys(): Collection
+    {
+        return $this->toys;
+    }
+
+    public function addToy(Toy $toy): self
+    {
+        if (!$this->toys->contains($toy)) {
+            $this->toys->add($toy);
+            $toy->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToy(Toy $toy): self
+    {
+        if ($this->toys->removeElement($toy)) {
+            // set the owning side to null (unless already changed)
+            if ($toy->getUser() === $this) {
+                $toy->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

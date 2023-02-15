@@ -1,9 +1,9 @@
 {% extends 'backoffice/base_secured.html.twig' %}
 
-{% block body %}
+{% block body%}
     <div class="ibox">
         <div class="ibox-head">
-            <div class="ibox-title">Edit Parent</div>
+            <div class="ibox-title">Add admin</div>
             <div class="ibox-tools">
                 <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
             </div>
@@ -30,19 +30,17 @@
                 <div class="col-sm-6 form-group">
                     {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
                 </div>
+
                 <div class="form-group row">
                     <div class="col-sm-10 ml-sm-auto">
                         <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
-                        <a href="{{ path('app_backoffice_user_index') }}">
+                        <a href="{{ path('app_backoffice_admin_index') }}">
                             <span class="btn btn-warning">Annuler</span></a>
                     </div>
                 </div>
 
-
-
             </div>
             {{ form_end(form) }}
-
         </div>
     </div>
 {% endblock %}

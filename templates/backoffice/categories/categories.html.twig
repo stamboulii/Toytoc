@@ -16,7 +16,7 @@
         <div class="alert bg-white">
             <h4>You may add category from here.</h4>
             <p>
-                <a class="btn btn-success" href="{{ path('app_backoffice_categories_new') }}" target="_blank">Add category</a>
+                <a class="btn btn-success" href="{{ path('app_backoffice_categories_new') }}" >Add category</a>
             </p>
         </div>
         <div class="ibox">
@@ -36,8 +36,9 @@
                         <td>{{ categories.name }}</td>
                         <td>{{ categories.description}}</td>
                         <td>
-                            <form method="post" action="{{ path('app_backoffice_categories_delete', {'id': categories.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-
+                            <form method="post" action="{{ path('app_backoffice_categories_delete', {'id': categories.id}) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <a class="btn btn-outline-info" href="#">Toys</a>
                                 <a
                                         class="btn btn-outline-success"
                                         href="{{ path('app_backoffice_categories_edit', {'id': categories.id}) }}">

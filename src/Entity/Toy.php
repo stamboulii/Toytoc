@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ToyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 
 #[ORM\Entity(repositoryClass: ToyRepository::class)]
@@ -17,7 +19,7 @@ class Toy
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $weight = null;
+    private ?float $weight = null;
 
     #[ORM\Column(length: 50)]
     private ?string $state = null;
@@ -25,12 +27,16 @@ class Toy
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\ManyToOne(inversedBy: 'toys')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $User = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getWeight(): ?int
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
@@ -62,6 +68,18 @@ class Toy
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }

@@ -52,7 +52,7 @@
                 <li class="dropdown dropdown-user">
                     <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
                         <img src="{{asset('assets/backoffice/img/admin-avatar.png')}}" />
-                        <span></span>Admin<i class="fa fa-angle-down m-l-5"></i></a>
+                        <span></span>{{ app.user.fullName }}<i class="fa fa-angle-down m-l-5"></i></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Profile</a>
                         <a class="dropdown-item" href="#"><i class="fa fa-cog"></i>Settings</a>
@@ -77,11 +77,15 @@
             </div>
             <ul class="side-menu metismenu">
                 <li>
-                    <a class="active" href="#"><i class="sidebar-item-icon fa fa-th-large"></i>
+                    <a class="active" href="{{ path('app_backoffice_index') }}"><i class="sidebar-item-icon fa fa-th-large"></i>
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
                 <li class="heading">FEATURES</li>
+                <li>
+                    <a href="{{ path('app_backoffice_admin_index') }}"><i class="sidebar-item-icon fa fa-user"></i>
+                        <span class="nav-label">Admins</span></a>
+                </li>
                 <li>
                     <a href="{{ path('app_backoffice_user_index') }}"><i class="sidebar-item-icon fa fa-user"></i>
                         <span class="nav-label">Parents</span></a>
@@ -90,7 +94,10 @@
                     <a href="{{ path('app_backoffice_categories_category') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
                         <span class="nav-label">Categories</span></a>
                 </li>
-
+                <li>
+                    <a href="{{ path('app_backoffice_toy_index') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
+                        <span class="nav-label">Toys</span></a>
+                </li>
             </ul>
         </div>
     </nav>

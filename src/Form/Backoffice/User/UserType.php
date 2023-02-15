@@ -4,6 +4,7 @@ namespace App\Form\Backoffice\User;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -35,7 +36,7 @@ class UserType extends AbstractType
             ->add('city', TextType::class, [
                 'required' => false,
             ])
-            ->add('birthday', DateType::class, [
+            ->add('birthday', BirthdayType::class, [
                 'required' => false,
             ]);    }
 

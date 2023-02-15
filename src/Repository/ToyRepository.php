@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Toy;
+use App\Helper\PaginatorHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -39,6 +41,49 @@ class ToyRepository extends ServiceEntityRepository
         }
     }
 
+    public function getToyByFiltersAndPaginator(array $filters = [], array $sort = null, int $limit = null, int $offset = null): array|Paginator
+    {
+        $queryBuilder = $this->createQueryBuilder('toy');
+
+
+        $orX = $queryBuilder->expr()->orX();
+        if (isset($filters['state']) && !empty($filters['state'])) {
+            $orX->add('toy.state LIKE :state');
+            $queryBuilder->setParameter('state', '%' . $filters['state'] . '%');
+        }
+
+        if (isset($filters['price']) && !empty($filters['price'])) {
+            $orX->add('toy.price LIKE :price');
+            $queryBuilder->setParameter('price', '%' . $filters['price'] . '%');
+        }
+        if (isset($filters['weight']) && !empty($filters['weight'])) {
+            $orX->add('toy.weight LIKE :weight');
+            $queryBuilder->setParameter('weight', '%' . $filters['weight'] . '%');
+        }
+
+
+        if ($orX->count() !== 0) {
+            $queryBuilder->andWhere($orX);
+        }
+
+        PaginatorHelper::applyPaginator($queryBuilder, $limit, $offset);
+        PaginatorHelper::applyOrder($queryBuilder, $sort);
+
+        return PaginatorHelper::results($queryBuilder);
+    }
+    public function findOneByIdJoinedToUser(int $toyId): ?Toy
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT t, u
+            FROM App\Entity\Toy t
+            INNER JOIN t.User u
+            WHERE t.id = :id'
+        )->setParameter('id', $toyId);
+
+        return $query->getOneOrNullResult();
+    }
 //    /**
 //     * @return Toy[] Returns an array of Toy objects
 //     */
