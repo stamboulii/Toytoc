@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email()]
     private ?string $email = null;
 
-    #[ORM\Column( nullable: true)]
+    #[ORM\Column(nullable: true)]
     #[Assert\Length(min: 5, max: 20)]
     private ?string $phone = null;
 
@@ -314,4 +314,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getFullName();
+    }
 }

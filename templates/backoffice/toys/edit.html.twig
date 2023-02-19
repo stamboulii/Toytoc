@@ -8,29 +8,18 @@
                 <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
             </div>
         </div>
-        <div class="ibox-body">
-            {{ form_start(form) }}
-            <div class="row">
-                <div class="col-sm-6 form-group">
-                    {{ form_row(form.price, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_row(form.state, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                <div class="col-sm-6 form-group">
-                    {{ form_row(form.weight, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_row(form.picture,{'attr': {'class': 'btn btn-info m-r-5'}}) }}
-
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-10 ml-sm-auto">
-                        <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
-                        <a href="{{ path('app_backoffice_toy_index') }}">
-                            <span class="btn btn-warning">Annuler</span></a>
-                    </div>
-                </div>
-            </div>
-            {{ form_end(form) }}
-
-        </div>
+        {{ include('backoffice/toys/_form.html.twig') }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.custom-file-input').on('change', function (event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
 {% endblock %}

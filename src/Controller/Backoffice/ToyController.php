@@ -42,8 +42,7 @@ class ToyController extends AbstractController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, ToyRepository $toyRepository): Response
     {
-        $toy  = new Toy();
-        $form = $this->createForm(ToyType::class, $toy);
+        $form = $this->createForm(ToyType::class, $toy = new Toy());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,14 +50,6 @@ class ToyController extends AbstractController
 
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
         }
-        //        if ($form->isSubmitted() && $form->isValid()) {
-        //            /** @var UploadedFile $pictureFile */
-        //            $pictureFile = $form->get('toy')->getData();
-        //            if ($pictureFile) {
-        //                $pictureFileName = $fileUploader->upload($pictureFile);
-        //                $toy->setPicture($pictureFileName);
-        //            }
-        //        }
 
         return $this->render('backoffice/toys/new.html.twig', [
             'toy'  => $toy,
@@ -74,11 +65,8 @@ class ToyController extends AbstractController
         $form = $this->createForm(ToyType::class, $toy);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $pictureFile */
-            $pictureFile = $form->get('toy')->getData();
-            if ($pictureFile) {
-                $pictureFileName = $fileUploader->upload($pictureFile);
-                $toy->setPicture($pictureFileName);
+            if ($pictureFile = $form->get('picture')->getData()) {
+                $toy->setPicture($fileUploader->upload($pictureFile));
             }
         }
 
