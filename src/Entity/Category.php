@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,6 +26,14 @@ class Category
     #[ORM\Column(length: 100)]
     #[Assert\Length(min: 10, max: 100)]
     private ?string $description = null;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Toy::class)]
+    private Collection $toys;
+
+    public function __construct()
+    {
+        $this->toys = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -50,6 +60,36 @@ class Category
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Toy>
+     */
+    public function getToys(): Collection
+    {
+        return $this->toys;
+    }
+
+    public function addToy(Toy $toy): self
+    {
+        if (!$this->toys->contains($toy)) {
+            $this->toys->add($toy);
+            $toy->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeToy(Toy $toy): self
+    {
+        if ($this->toys->removeElement($toy)) {
+            // set the owning side to null (unless already changed)
+            if ($toy->getCategory() === $this) {
+                $toy->setCategory(null);
+            }
+        }
 
         return $this;
     }

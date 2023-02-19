@@ -52,7 +52,7 @@
                 <li class="dropdown dropdown-user">
                     <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
                         <img src="{{asset('assets/backoffice/img/admin-avatar.png')}}" />
-                        <span></span>{{ app.user.fullName }}<i class="fa fa-angle-down m-l-5"></i></a>
+                        <span></span>{{ app.User.fullName }}<i class="fa fa-angle-down m-l-5"></i></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="#"><i class="fa fa-user"></i>Profile</a>
                         <a class="dropdown-item" href="#"><i class="fa fa-cog"></i>Settings</a>
@@ -73,7 +73,7 @@
                     <img src="{{asset('assets/backoffice/img/admin-avatar.png')}}" width="45px" />
                 </div>
                 <div class="admin-info">
-                    <div class="font-strong">{{ app.user.fullName }}</div><small>Administrator</small></div>
+                    <div class="font-strong">{{ app.User.fullName }}</div><small>Administrator</small></div>
             </div>
             <ul class="side-menu metismenu">
                 <li>
@@ -93,10 +93,6 @@
                 <li>
                     <a href="{{ path('app_backoffice_categories_index') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
                         <span class="nav-label">Categories</span></a>
-                </li>
-                <li>
-                    <a href="{{ path('app_backoffice_toy_index') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
-                        <span class="nav-label">Toys</span></a>
                 </li>
             </ul>
         </div>

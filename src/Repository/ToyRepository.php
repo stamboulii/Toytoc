@@ -50,7 +50,7 @@ class ToyRepository extends ServiceEntityRepository
         }
 
         if (null !== $filters['category_id']) {
-            $queryBuilder->andWhere('toy.User = :category')->setParameter('category', $filters['user_id']);
+            $queryBuilder->andWhere('toy.category = :category')->setParameter('category', $filters['category_id']);
         }
 
         $orX = $queryBuilder->expr()->orX();
@@ -78,19 +78,19 @@ class ToyRepository extends ServiceEntityRepository
 
         return PaginatorHelper::results($queryBuilder);
     }
-    public function findOneByIdJoinedToUser(int $toyId): ?Toy
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT t, u
-            FROM App\Entity\Toy t
-            INNER JOIN t.User u
-            WHERE t.id = :id'
-        )->setParameter('id', $toyId);
-
-        return $query->getOneOrNullResult();
-    }
+//    public function findOneByIdJoinedToUser(int $toyId): ?Toy
+//    {
+//        $entityManager = $this->getEntityManager();
+//
+//        $query = $entityManager->createQuery(
+//            'SELECT t, u
+//            FROM App\Entity\Toy t
+//            INNER JOIN t.User u
+//            WHERE t.id = :id'
+//        )->setParameter('id', $toyId);
+//
+//        return $query->getOneOrNullResult();
+//    }
 //    /**
 //     * @return Toy[] Returns an array of Toy objects
 //     */

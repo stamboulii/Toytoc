@@ -40,7 +40,7 @@
                                   onsubmit="return confirm('Are you sure you want to delete this item?');">
                                 <a class="btn btn-outline-info"
                                    href="{{ path('app_backoffice_toy_index',{'category_id': category.id}) }}">Toys</a>
-                                <a
+
                                 <a
                                         class="btn btn-outline-success"
                                         href="{{ path('app_backoffice_categories_edit', {'id': category.id}) }}">
@@ -56,7 +56,7 @@
 
                     </tbody>
                 </table>
-                {{ include('backoffice/components/pagination.html.twig', {'paginator' : category}) }}
+                {{ include('backoffice/components/pagination.html.twig', {'paginator' : categories}) }}
             </div>
         </div>
 

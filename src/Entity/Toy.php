@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 
+
 #[ORM\Entity(repositoryClass: ToyRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Toy
@@ -30,6 +31,14 @@ class Toy
     #[ORM\ManyToOne(inversedBy: 'toys')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'toys')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\File()]
+    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -80,6 +89,30 @@ class Toy
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
