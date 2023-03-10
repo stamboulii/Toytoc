@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+
 use App\Repository\ToyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,10 +25,10 @@ class Toy
     #[ORM\Column(nullable: true)]
     private ?float $weight = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50,nullable: true)]
     private ?string $state = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'toys')]
@@ -36,9 +39,17 @@ class Toy
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\File()]
-    private ?string $picture = null;
+//    #[ORM\Column(length: 255, nullable: true)]
+//    #[Assert\File()]
+//    private ?string $picture = null;
+
+    #[ORM\OneToMany(mappedBy: 'toy', targetEntity: Pictures::class, cascade: ['persist'], orphanRemoval: true)]
+    private ArrayCollection $pictures;
+
+    public function __construct()
+    {
+        $this->pictures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,14 +116,44 @@ class Toy
         return $this;
     }
 
-    public function getPicture(): ?string
+//    public function getPicture(): ?string
+//    {
+//        return $this->picture;
+//    }
+
+//    public function setPicture(?string $picture): self
+//    {
+//        $this->picture = $picture;
+//
+//        return $this;
+//    }
+
+    /**
+     * @return Collection<int, Pictures>
+     */
+    public function getPictures(): Collection
     {
-        return $this->picture;
+        return $this->pictures;
     }
 
-    public function setPicture(?string $picture): self
+    public function addPicture(Pictures $picture): self
     {
-        $this->picture = $picture;
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+            $picture->setToy($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Pictures $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getToy() === $this) {
+                $picture->setToy(null);
+            }
+        }
 
         return $this;
     }

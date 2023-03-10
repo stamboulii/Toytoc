@@ -23,7 +23,7 @@
                     <div class="card-group">
                         {% for toy in toys %}
                         <div class="card">
-                            <img class="card-img-top" {{ toy.picture }}>
+                            <img class="card-img-top" src="{{ asset('upload/img/toys/' ~ toy.pictures) }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ toy.price }}</h5>
                                 <div>{{ toy.state }}</div>

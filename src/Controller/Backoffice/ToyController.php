@@ -8,6 +8,7 @@ use App\Form\Backoffice\Toy\ToyType;
 use App\Helper\HttpQueryHelper;
 use App\Repository\ToyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,12 +41,15 @@ class ToyController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ToyRepository $toyRepository): Response
+    public function new(Request $request, ToyRepository $toyRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(ToyType::class, $toy = new Toy());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($pictureFile = $form->get('picture')->getData()) {
+                $toy->addPicture($fileUploader->upload($pictureFile));
+            }
             $toyRepository->save($toy, true);
 
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
@@ -64,13 +68,11 @@ class ToyController extends AbstractController
     {
         $form = $this->createForm(ToyType::class, $toy);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($pictureFile = $form->get('picture')->getData()) {
-                $toy->setPicture($fileUploader->upload($pictureFile));
-            }
-        }
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($pictureFile = $form->get('picture')->getData()) {
+                $toy->addPicture($fileUploader->upload($pictureFile));
+            }
             $toyRepository->save($toy, true);
 
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
