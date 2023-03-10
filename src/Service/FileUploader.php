@@ -5,7 +5,6 @@ namespace App\Service;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 final  class FileUploader
 {
@@ -15,7 +14,7 @@ final  class FileUploader
 
     }
 
-    public function upload(UploadedFile $file,UploadedFile $picture): string
+    public function upload(UploadedFile $file): string
     {
         $toyFilename  = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($toyFilename);
@@ -28,8 +27,6 @@ final  class FileUploader
         }
 
         return $fileName;
-
-
     }
 
 

@@ -39,12 +39,8 @@ class Toy
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-//    #[ORM\Column(length: 255, nullable: true)]
-//    #[Assert\File()]
-//    private ?string $picture = null;
-
-    #[ORM\OneToMany(mappedBy: 'toy', targetEntity: Pictures::class, cascade: ['persist'], orphanRemoval: true)]
-    private ArrayCollection $pictures;
+    #[ORM\OneToMany(mappedBy: 'toy', targetEntity: Picture::class, cascade: ['persist', 'remove'])]
+    private ArrayCollection|Collection $pictures;
 
     public function __construct()
     {
@@ -129,14 +125,14 @@ class Toy
 //    }
 
     /**
-     * @return Collection<int, Pictures>
+     * @return Collection<int, Picture>
      */
     public function getPictures(): Collection
     {
         return $this->pictures;
     }
 
-    public function addPicture(Pictures $picture): self
+    public function addPicture(Picture $picture): self
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures->add($picture);
@@ -146,14 +142,9 @@ class Toy
         return $this;
     }
 
-    public function removePicture(Pictures $picture): self
+    public function removePicture(Picture $picture): self
     {
-        if ($this->pictures->removeElement($picture)) {
-            // set the owning side to null (unless already changed)
-            if ($picture->getToy() === $this) {
-                $picture->setToy(null);
-            }
-        }
+        $this->pictures->removeElement($picture);
 
         return $this;
     }

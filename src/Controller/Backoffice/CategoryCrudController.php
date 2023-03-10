@@ -44,7 +44,7 @@ class CategoryCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->save($category, true);
 
-            return $this->redirectToRoute('app_backoffice_categories_category', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_categories_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backoffice/categories/new.html.twig', [
@@ -64,7 +64,7 @@ class CategoryCrudController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryRepository->save($category, true);
 
-            return $this->redirectToRoute('app_backoffice_categories_category', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_backoffice_categories_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('backoffice/categories/edit.html.twig', [

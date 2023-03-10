@@ -10,6 +10,14 @@
         </div>
         {{ include('backoffice/toys/_form.html.twig') }}
     </div>
+
+    <h4>Images</h4>
+
+    {% for picture in toy.pictures %}
+        <img class="card-img-top" src="{{ asset('upload/img/toys/' ~ picture.path) }}">
+    {% else %}
+        No pictures found for this toy
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}

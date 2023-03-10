@@ -8,12 +8,13 @@ use App\Form\Backoffice\Toy\ToyType;
 use App\Helper\HttpQueryHelper;
 use App\Repository\ToyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\Picture;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/toy', name: 'app_backoffice_toy_')]
 class ToyController extends AbstractController
@@ -47,9 +48,11 @@ class ToyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($pictureFile = $form->get('picture')->getData()) {
-                $toy->addPicture($fileUploader->upload($pictureFile));
+            /** @var UploadedFile $image */
+            foreach ($form->get('images')->getData() as $image) {
+                $toy->addPicture((new Picture())->setPath($fileUploader->upload($image)));
             }
+
             $toyRepository->save($toy, true);
 
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);
@@ -64,15 +67,25 @@ class ToyController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Toy $toy, ToyRepository $toyRepository, FileUploader $fileUploader): Response
+    public function edit(Request $request, Toy $toy, ToyRepository $toyRepository, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(ToyType::class, $toy);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($pictureFile = $form->get('picture')->getData()) {
-                $toy->addPicture($fileUploader->upload($pictureFile));
+            $entityManager->createQueryBuilder()
+                ->from(Picture::class, 'picture')
+                ->delete()
+                ->where('picture.toy = :toy')
+                ->setParameter('toy', $toy)
+                ->getQuery()
+                ->execute();
+
+            /** @var UploadedFile $image */
+            foreach ($form->get('images')->getData() as $image) {
+                $toy->addPicture((new Picture())->setPath($fileUploader->upload($image)));
             }
+
             $toyRepository->save($toy, true);
 
             return $this->redirectToRoute('app_backoffice_toy_index', [], Response::HTTP_SEE_OTHER);

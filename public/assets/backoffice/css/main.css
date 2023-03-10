@@ -3514,6 +3514,9 @@ table.dataTable {
   right: 0;
   bottom: 0; }
 
+.custom-file-label { opacity: 1; }
+.custom-file-input { opacity: 1; }
+
 @media (max-width: 1230px) {
   .adminca-banner {
     display: inline-block; }
