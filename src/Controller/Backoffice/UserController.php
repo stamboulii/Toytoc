@@ -2,6 +2,9 @@
 
 namespace App\Controller\Backoffice;
 
+use App\Entity\Picture;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,12 +39,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
+    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user = User::newParent());
         $form->handleRequest($request);
-
+        /** @var UploadedFile $image */
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPicture($fileUploader->upload($image));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);

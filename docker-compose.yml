@@ -13,7 +13,7 @@ services:
             MYSQL_USER: toytoc
             MYSQL_PASSWORD: toytoc
         ports:
-            - 3306:3306
+            - 3300:3300
         networks:
             - symfony
     php:
