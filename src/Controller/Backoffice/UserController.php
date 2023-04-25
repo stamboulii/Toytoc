@@ -14,7 +14,7 @@ use App\Entity\User;
 use App\Form\Backoffice\User\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/user', name: 'app_backoffice_user_')]
+#[Route('/secured/user', name: 'app_backoffice_user_')]
 class UserController extends AbstractController
 {
     #[Route('/index', name: 'index', methods: ['GET'])]

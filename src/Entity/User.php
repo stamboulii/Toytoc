@@ -287,6 +287,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (new self())->setRoles([static::ROLE_ADMIN]);
     }
 
+    public function is(string $role): bool
+    {
+        return in_array($role, $this->roles);
+    }
+
     /**
      * @return Collection<int, Toy>
      */

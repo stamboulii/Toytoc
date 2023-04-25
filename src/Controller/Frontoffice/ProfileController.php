@@ -17,10 +17,9 @@ use App\Form\Backoffice\User\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Toy;
 
-
-class ProfileController extends AbstractController 
+#[Route('/secured')]
+class ProfileController extends AbstractController
 {
-
     #[Route('/profile', name: 'app_frontoffice_profile', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request): Response
     {
@@ -31,13 +30,13 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('frontoffice/profile/profile.html.twig', [
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
             'user' => $userRepository->$filters,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_frontoffice_profile_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository,FileUploader $fileUploader): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -90,7 +89,7 @@ class ProfileController extends AbstractController
 
         ]);
     }
-    
+
     #[Route('/{id}', name: 'app_frontoffice_profile__deletetoy', methods: ['POST'])]
     public function deletetoy(Request $request, Toy $toy, ToyRepository $toyRepository): Response
     {
@@ -100,5 +99,5 @@ class ProfileController extends AbstractController
 
         return $this->redirectToRoute('app_frontoffice_profile', [], Response::HTTP_SEE_OTHER);
     }
-    
+
 }

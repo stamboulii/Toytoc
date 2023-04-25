@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/categories',name:'app_backoffice_categories_')]
+#[Route('/secured/categories',name:'app_backoffice_categories_')]
 class CategoryCrudController extends AbstractController
 {
     #[Route('/category', name: 'index', methods: ['GET'])]

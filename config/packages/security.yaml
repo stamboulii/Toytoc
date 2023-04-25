@@ -15,8 +15,8 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-#            pattern: ^/
+        admin:
+            pattern: ^/admin
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
@@ -32,12 +32,29 @@ security:
             logout:
                 path: app_backoffice_logout
                 target: app_backoffice_login
+        main:
+            pattern: ^/home
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Security\LoginFormAuthenticator
+            form_login:
+                login_path: app_frontoffice_login
+                check_path: app_frontoffice_login
+                enable_csrf: true
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /admin/index
+                always_remember_me: true
+            logout:
+                path: app_frontoffice_logout
+                target: app_frontoffice_login
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-       - { path: ^/front/index, roles: ROLE_PARENT }
-       - { path: ^/admin/index, roles: ROLE_ADMIN }
+       - { path: ^/home/secured, roles: ROLE_PARENT }
+       - { path: ^/admin/secured, roles: ROLE_ADMIN }
 
 when@test:
     security:

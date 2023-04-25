@@ -16,7 +16,7 @@ use App\Form\Backoffice\Toy\ToyType;
 
 class FrontController extends AbstractController
 {
-    #[Route('/front', name: 'app_front')]
+    #[Route('/index', name: 'app_front')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('frontoffice/front/index.html.twig', [
@@ -34,7 +34,7 @@ class FrontController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
         }
-        
+
         return $this->render('frontoffice/toys/listetoys.html.twig', [
             'form' => $form->createView(),
             'toys' => $toyRepository->getToyByFiltersAndPaginator(

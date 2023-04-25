@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/index', name: 'app_backoffice_index')]
+    #[Route('/secured/index', name: 'app_backoffice_index')]
     public function index(OrderRepository $orderRepository): Response
     {
         // $filters = ['order'=> $orderRepository->findAll()];

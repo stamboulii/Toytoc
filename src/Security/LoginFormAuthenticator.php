@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\SecurityBundle\Security;
+use App\Entity\User;
 
 
 class LoginFormAuthenticator extends AbstractAuthenticator
@@ -25,7 +26,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return $request->getPathInfo() === '/admin/login' && $request->isMethod('POST');
+        return in_array($request->getPathInfo(), ['/admin/login', '/home/login']) && $request->isMethod('POST');
     }
 
     public function authenticate(Request $request): Passport
@@ -49,7 +50,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return new RedirectResponse(
-            $this->router->generate('app_backoffice_index')
+            $token->getUser()->is(User::ROLE_ADMIN) ? $this->router->generate('app_backoffice_index') : $this->router->generate('app_front')
         );
     }
 

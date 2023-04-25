@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Picture;
 use Doctrine\ORM\EntityManagerInterface;
 
-#[Route('/toy', name: 'app_backoffice_toy_')]
+#[Route('/secured/toy', name: 'app_backoffice_toy_')]
 class ToyController extends AbstractController
 {
     #[Route('/index', name: 'index', methods: ['GET'])]
