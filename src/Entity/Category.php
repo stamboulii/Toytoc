@@ -30,6 +30,9 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Toy::class)]
     private Collection $toys;
 
+    #[ORM\Column(length: 255,nullable: true)]
+    private ?string $picture = null;
+
     public function __construct()
     {
         $this->toys = new ArrayCollection();
@@ -99,4 +102,21 @@ class Category
         return $this;
     }
 
+    public function setToys(Collection $toys): self
+    {
+        $this->toys = $toys;
+
+        return $this;
+    }
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
 }

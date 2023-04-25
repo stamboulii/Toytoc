@@ -40,21 +40,7 @@ class UserFilterType extends AbstractType
             ->add('city', TextType::class, [
                 'required' => false,
             ])
-            ->add('picture', FileType::class, [
-                'label' => 'Toy',
 
-                // unmapped means that this field is not associated to any entity property
-                'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
-                'required' => false,
-
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
-                'constraints' => [
-                    new Image()],
-            ])
         ;
 
     }

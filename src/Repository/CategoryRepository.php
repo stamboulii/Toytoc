@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\Toy;
 use App\Helper\PaginatorHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,9 +20,29 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private readonly ToyRepository $toyRepository)
     {
         parent::__construct($registry, Category::class);
+    }
+
+    public function getHomepageCategories(): array
+    {
+        /** @var Category[] $categories */
+        $categories = $this->createQueryBuilder('e')
+            ->setMaxResults(5)
+            ->orderBy('e.name')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($categories as $category) {
+            $category->setToys(
+                new ArrayCollection(
+                    $this->toyRepository->getToysByCategory($category)
+                )
+            );
+        }
+
+        return $categories;
     }
 
     public function save(Category $entity, bool $flush = false): void

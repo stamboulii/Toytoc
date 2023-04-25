@@ -7,7 +7,6 @@ use App\Repository\ToyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -35,7 +34,7 @@ class Toy
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'toys')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'toys')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 

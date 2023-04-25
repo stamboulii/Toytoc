@@ -7,6 +7,8 @@ use App\Form\Backoffice\User\UserFilterType;
 use App\Form\Backoffice\User\UserType;
 use App\Helper\HttpQueryHelper;
 use App\Repository\UserRepository;
+use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,12 +38,15 @@ class AdminController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository): Response
+    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user = User::newAdmin());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
+            $user->setPicture($fileUploader->upload($image));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_admin_index', [], Response::HTTP_SEE_OTHER);
@@ -55,12 +60,15 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
+            $user->setPicture($fileUploader->upload($image));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_admin_index', [], Response::HTTP_SEE_OTHER);

@@ -26,7 +26,7 @@ class ToyController extends AbstractController
             'user_id'     => $request->query->get('user_id'),
             'category_id' => $request->query->get('category_id'),
         ];
-        $form    = $this->createForm(ToyFilterType::class)->handleRequest($request);
+            $form    = $this->createForm(ToyFilterType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
         }

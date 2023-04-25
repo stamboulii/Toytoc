@@ -41,14 +41,21 @@ class   UserType extends AbstractType
                 'required' => false,
             ])
             ->add('picture', FileType::class, [
-                'label' => 'PDF file',
-                'attr' => ['placeholder' => 'Choose file'],
-                'required' => false,
-                'mapped'   => false,
+                'mapped' => false, // this tells Symfony to ignore this field when mapping data
+                'required' => false, // this makes the field optional
                 'constraints' => [
-                    new Image([ 'mimeTypesMessage' => 'Please upload a valid PDF document'])
-            ]]);
-        ;    }
+                    new Image([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file (JPG, PNG or GIF)',
+                    ])
+                ],
+            ]);
+           }
 
     public function configureOptions(OptionsResolver $resolver)
     {

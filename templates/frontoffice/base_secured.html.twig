@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{{ asset('assets/login/css/material-design-iconic-font.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/login/css/nouislider.min.css') }}s">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{ asset('assets/login/css/style.css') }}">
+
+</head>
+<body>
+
+<div class="main">
+
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-img">
+                <img src="{{ asset('assets/login/images/form.jpg') }}" alt="">
+                <div class="signup-img-content">
+                    <h2>Register now </h2>
+                </div>
+            </div>
+            <div class="signup-form">
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="{{ asset('assets/login/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/login/js/nouislider.min.js') }}"></script>
+<script src="{{ asset('assets/login/js/wNumb.js') }}"></script>
+<script src="{{ asset('assets/login/js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/login/js/additional-methods.min.js') }}"></script>
+<script src="{{ asset('assets/login/js/main.js') }}"></script>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+</body>
+</html>

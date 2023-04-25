@@ -6,8 +6,10 @@ use App\Entity\Category;
 use App\Form\Backoffice\Category\CategoryFilterType;
 use App\Form\Backoffice\Category\CategoryType;
 use App\Helper\HttpQueryHelper;
-use App\Repository\CategoryRepository;;
+use App\Repository\CategoryRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,13 +37,16 @@ class CategoryCrudController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository,FileUploader $fileUploader): Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
+            $category->setPicture($fileUploader->upload($image));
             $categoryRepository->save($category, true);
 
             return $this->redirectToRoute('app_backoffice_categories_index', [], Response::HTTP_SEE_OTHER);
@@ -56,12 +61,15 @@ class CategoryCrudController extends AbstractController
 
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function edit(Request $request, Category $category, CategoryRepository $categoryRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
+            $category->setPicture($fileUploader->upload($image));
             $categoryRepository->save($category, true);
 
             return $this->redirectToRoute('app_backoffice_categories_index', [], Response::HTTP_SEE_OTHER);

@@ -70,7 +70,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Toy::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Toy::class)]
     private Collection $toys;
 
     #[ORM\Column(length: 255,nullable: true)]

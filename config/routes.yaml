@@ -5,4 +5,12 @@ admin_controllers:
     type: attribute
     prefix: /admin
 
+user_controllers:
+    resource:
+        path: ../src/Controller/Frontoffice
+        namespace: App\Controller\Frontoffice
+    type: attribute
+    prefix: /home
+
+
 

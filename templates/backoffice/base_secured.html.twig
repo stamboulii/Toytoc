@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
     <title>Backoffice TOY TOC | {% block title %}{% endblock %}</title>
@@ -20,6 +21,8 @@
 </head>
 
 <body class="fixed-navbar">
+
+
 <div class="page-wrapper">
     <!-- START HEADER-->
     <header class="header">
@@ -93,6 +96,11 @@
                 <li>
                     <a href="{{ path('app_backoffice_categories_index') }}"><i class="sidebar-item-icon fa fa-list-alt"></i>
                         <span class="nav-label">Categories</span></a>
+                </li>
+                <li>
+                        <a href="{{path('app_front')}}"><i class="sidebar-item-icon fa fa-file-text"></i>
+                            <span class="nav-label">Frontoffice</span></a>
+                        
                 </li>
             </ul>
         </div>

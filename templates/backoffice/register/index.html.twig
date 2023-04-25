@@ -1,0 +1,103 @@
+{% extends 'backoffice/base_not_secured.html.twig' %}
+
+    {% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="content">
+{#        <form id="register-form" action="javascript:;" method="post">#}
+            <h2 class="login-title">Sign Up</h2>
+            <div class="ibox-body">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.country, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        {{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        {{ form_row(form.zipCode, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.city, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_row(form.picture, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-6 form-group">
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            {{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <div class="col-sm-10 ">
+                                <input class="form-control" type="text" name="password_confirmation" placeholder="confirm password">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                    </div>
+            <div class="form-group">
+                <button class="btn btn-info btn-block" type="submit">Sign up</button>
+            </div>
+
+            <div class="text-center">Already a member?
+                <a class="color-blue" href="{{ path('app_backoffice_login') }}">Login here</a>
+            </div>
+
+    </div>
+    <!-- BEGIN PAGA BACKDROPS-->
+    <div class="sidenav-backdrop backdrop"></div>
+    <div class="preloader-backdrop">
+        <div class="page-preloader">Loading</div>
+    </div>
+    </div>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script type="text/javascript">
+    $(function() {
+        $('#register-form').validate({
+            errorClass: "help-block",
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    confirmed: true
+                },
+                password_confirmation: {
+                    equalTo: password
+                }
+            },
+            highlight: function(e) {
+                $(e).closest(".form-group").addClass("has-error")
+            },
+            unhighlight: function(e) {
+                $(e).closest(".form-group").removeClass("has-error")
+            },
+        });
+    });
+</script>
+{% endblock javascripts %}

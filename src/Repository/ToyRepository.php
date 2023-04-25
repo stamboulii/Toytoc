@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Toy;
 use App\Helper\PaginatorHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,6 +42,17 @@ class ToyRepository extends ServiceEntityRepository
         }
     }
 
+    public function getToysByCategory( Category $category): array
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.category', 'c')
+            ->where('c.id = :categoryId')
+            ->setParameter('categoryId', $category->getId())
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getToyByFiltersAndPaginator(array $filters = [], array $sort = null, int $limit = null, int $offset = null): array|Paginator
     {
         $queryBuilder = $this->createQueryBuilder('toy');
@@ -78,6 +90,8 @@ class ToyRepository extends ServiceEntityRepository
 
         return PaginatorHelper::results($queryBuilder);
     }
+
+
 //    public function findOneByIdJoinedToUser(int $toyId): ?Toy
 //    {
 //        $entityManager = $this->getEntityManager();

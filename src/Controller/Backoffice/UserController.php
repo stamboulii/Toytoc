@@ -2,7 +2,6 @@
 
 namespace App\Controller\Backoffice;
 
-use App\Entity\Picture;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,8 +42,9 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user = User::newParent());
         $form->handleRequest($request);
-        /** @var UploadedFile $image */
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
             $userRepository->save($user, true);
 
@@ -59,12 +59,15 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $image */
+            $image = $form['picture']->getData();
+            $user->setPicture($fileUploader->upload($image));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);

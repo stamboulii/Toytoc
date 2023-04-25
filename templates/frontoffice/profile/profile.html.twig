@@ -1,0 +1,135 @@
+{% extends 'frontoffice/index.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-5 pb-5">
+                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner border">
+                        <div class="carousel-item active">
+                            <img class="w-100 h-100" src="{{ asset('upload/img/toys/' ~ user.pictures|first.path) }}" alt="Image">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-7 pb-5">
+                <h6 class="font-weight-semi-bold">{{uesr.fullname}}</h6>
+                <h6 class="font-weight-semi-bold">{{uesr.email}}</h6>
+                <h6 class="font-weight-semi-bold">{{uesr.address}}</h6>
+                <h6 class="font-weight-semi-bold">{{uesr.phone}}</h6>   
+                <h6 class="font-weight-semi-bold">{{uesr.country}}</h6>
+                <h6 class="font-weight-semi-bold">{{uesr.city}}</h6>
+            </div>
+        </div>
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="nav nav-tabs justify-content-center border-secondary mb-4">
+                    <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Add toy</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">edit your profile</a>
+                    <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">your toys</a>
+                </div>
+                 <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                    <div class="ibox-head">
+                <div class="ibox-title">Add Toy</div>
+                <div class="ibox-tools">
+                <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
+                </div>
+                </div>
+                    {{ include('backoffice/toys/_form.html.twig') }}
+                </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <h4 class="mb-3">edit</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                             <div class="ibox-body">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-6 form-group">
+                    {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.country, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-6 form-group">
+                    {{ form_row(form.address, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-6 form-group">
+                    {{ form_row(form.zipCode, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.city, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-6 form-group">
+                    {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.picture, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 ml-sm-auto">
+                        <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
+                        <a href="{{ path('app_backoffice_user_index') }}">
+                            <span class="btn btn-warning">Annuler</span></a>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4">your toys</h4>
+                                <div class="media mb-4">
+                                    <div class="card-group">
+                        {% for toy in toys %}
+                        <div class="card">
+                            <img class="card-img-top" src="{{ asset('upload/img/toys/' ~ toy.pictures|first.path) }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ toy.price }}</h5>
+                                <div>{{ toy.state }}</div>
+                            </div>
+                            <div class="card-footer">
+                                <form method="post" action="{{ path('app_backoffice_toy_delete', {'id': toy.id}) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <a href="{{ path('app_backoffice_toy_edit', {'id': toy.id}) }}" class="btn btn-default btn-sm"><i class="fa fa-plus"></i> Edit</a>
+
+                                <input  type="hidden" name="_token" value="{{ csrf_token('delete' ~ toy.id) }}">
+                                <button class="btn btn-default btn-sm"><i class="fa fa-trash"></i>Delete</button>
+                                </form>
+                            </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.custom-file-input').on('change', function (event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent()
+                .find('.custom-file-label')
+                .html(inputFile.files[0].name);
+        });
+    </script>
+{% endblock %}
