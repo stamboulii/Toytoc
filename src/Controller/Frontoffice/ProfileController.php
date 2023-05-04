@@ -17,10 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Toy;
 use App\Form\Backoffice\Toy\ToyType;
 
-
+#[Route('/secured/profile')]
 class ProfileController extends AbstractController
 {
-    #[Route('/secured/profile', name: 'app_frontoffice_profile', methods: ['GET'])]
+    #[Route('/', name: 'app_frontoffice_profile', methods: ['GET'])]
     public function index(): Response
     {
         $user =  $this->getUser();
@@ -30,7 +30,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/secured/edit', name: 'app_frontoffice_profile_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit', name: 'app_frontoffice_profile_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserRepository $userRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user =  $this->getUser());
@@ -50,7 +50,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_frontoffice_profile_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_frontoffice_profile_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
@@ -60,7 +60,7 @@ class ProfileController extends AbstractController
         return $this->redirectToRoute('app_backoffice_user_delete', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/secured/new', name: 'app_frontoffice_profile_addtoy', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_frontoffice_profile_addtoy', methods: ['GET', 'POST'])]
     public function new(Request $request, ToyRepository $toyRepository, FileUploader $fileUploader): Response
     {
         $user =  $this->getUser();
@@ -84,7 +84,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/secured/toys', name: 'app_frontoffice_profile_toys', methods: ['GET'])]
+    #[Route('/toys', name: 'app_frontoffice_profile_toys', methods: ['GET'])]
     public function toys( ToyRepository $toyRepository): Response
     {
         return $this->render('frontoffice/profile/yourtoys.html.twig', [
@@ -92,7 +92,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_frontoffice_profile__deletetoy', methods: ['POST'])]
+    #[Route('/delete-toy/{id}', name: 'app_frontoffice_profile__deletetoy', methods: ['POST'])]
     public function deletetoy(Request $request, Toy $toy, ToyRepository $toyRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $toy->getId(), $request->request->get('_token'))) {

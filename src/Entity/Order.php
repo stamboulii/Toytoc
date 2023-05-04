@@ -7,13 +7,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
+#[ORM\Table(name: 'toys_order')]
 #[ORM\HasLifecycleCallbacks]
 class Order
 {
     use Traits\CreatedUpdatedAtTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -25,17 +28,20 @@ class Order
     #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
-    
-
-    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'orders')]
     private ?User $buyer = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderr', targetEntity: Toy::class,cascade: ['persist', 'remove'])]
-    private Collection $toys;
+    #[ORM\Column(type: 'json')]
+    private array $toys = [];
+
+    #[ORM\OneToOne(inversedBy: 'order', targetEntity: Shipping::class, cascade: ['persist', 'remove'])]
+    private Shipping $shipping;
 
     public function __construct()
     {
-        $this->toys = new ArrayCollection();
+        $this->reference = uniqid();
+        $this->orderDate = new \DateTime();
+        $this->shipping = (new Shipping())->setOrder($this);
     }
 
     public function getId(): ?int
@@ -67,8 +73,6 @@ class Order
         return $this;
     }
 
-    
-
     public function getBuyer(): ?User
     {
         return $this->buyer;
@@ -77,36 +81,31 @@ class Order
     public function setBuyer(?User $buyer): self
     {
         $this->buyer = $buyer;
+        $this->shipping->setAddress(sprintf('%s, %s-%s', $buyer->getAddress(), $buyer->getZipCode(), $buyer->getCity()));
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Toy>
-     */
-    public function getToys(): Collection
+    public function getToys(): array
     {
         return $this->toys;
     }
 
-    public function addToy(Toy $toy): self
+    public function setToys(array $toys): self
     {
-        if (!$this->toys->contains($toy)) {
-            $this->toys->add($toy);
-            $toy->setOrderr($this);
-        }
+        $this->toys = $toys;
 
         return $this;
     }
 
-    public function removeToy(Toy $toy): self
+    public function getShipping(): ?Shipping
     {
-        if ($this->toys->removeElement($toy)) {
-            // set the owning side to null (unless already changed)
-            if ($toy->getOrderr() === $this) {
-                $toy->setOrderr(null);
-            }
-        }
+        return $this->shipping;
+    }
+
+    public function setShipping(?Shipping $shipping): self
+    {
+        $this->shipping = $shipping;
 
         return $this;
     }

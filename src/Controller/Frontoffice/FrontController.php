@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Toy;
 use App\Form\Backoffice\Toy\ToyType;
-
+use App\Repository\OrderRepository;
 
 
 class FrontController extends AbstractController
 {
-    #[Route('/front', name: 'app_front')]
+    #[Route('/', name: 'app_front')]
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('frontoffice/front/index.html.twig', [
@@ -29,13 +29,10 @@ class FrontController extends AbstractController
     public function toys(Category $category, ToyRepository $toyRepository, Request $request): Response
     {
         $filters = $toyRepository->getToysByCategory($category);
-
         $form    = $this->createForm(ToyType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $filters = array_merge($filters, $form->getData());
         }
-
-
 
         return $this->render('frontoffice/toys/listetoys.html.twig', [
             'form' => $form->createView(),
@@ -44,12 +41,12 @@ class FrontController extends AbstractController
     }
 
     #[Route('/detailtoy/{id}', name: 'app_frontoffice_detailtoy')]
-    public function detailtoy(Request $request, Toy $toy): Response
+    public function detailtoy(Request $request, Toy $toy, OrderRepository $repository): Response
     {
-        $form= $this->createForm(ToyType::class)->handleRequest($request);
         return $this->render('frontoffice/toys/detailtoy.html.twig', [
-            'toy'  => $toy,
-            'form' => $form->createView(),
+            'toy'             => $toy,
+            'is_under_buying' => $repository->isToyUnderBuying($toy),
+            'form'            => $this->createForm(ToyType::class)->handleRequest($request)->createView(),
         ]);
     }
 }

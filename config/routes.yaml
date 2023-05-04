@@ -10,7 +10,5 @@ user_controllers:
         path: ../src/Controller/Frontoffice
         namespace: App\Controller\Frontoffice
     type: attribute
-    prefix: /home
-
-
+    prefix: /
 

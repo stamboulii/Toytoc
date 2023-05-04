@@ -8,9 +8,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use App\Repository\UserRepository;
+use App\Entity\User;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
+    public function __construct(private readonly UserRepository $userRepository)
+    {
+    }
+
     /**
      * Symfony calls this method if you use features like switch_user
      * or remember_me.
@@ -22,11 +28,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function loadUserByIdentifier($identifier): UserInterface
     {
-        // Load a User object from your data source or throw UserNotFoundException.
-        // The $identifier argument may not actually be a username:
-        // it is whatever value is being returned by the getUserIdentifier()
-        // method in your User class.
-        throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
+        return $this->userRepository->findOneBy(['email' => $identifier]);
     }
 
     /**
@@ -55,8 +57,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
         }
 
-
-        throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
+        return $user;
     }
 
     /**
@@ -72,8 +73,6 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        // TODO: when hashed passwords are in use, this method should:
-        // 1. persist the new password in the user storage
-        // 2. update the $user object with $user->setPassword($newHashedPassword);
+        $user->setPassword($newHashedPassword);
     }
 }

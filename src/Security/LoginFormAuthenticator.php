@@ -26,7 +26,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return in_array($request->getPathInfo(), ['/admin/login', '/home/login']) && $request->isMethod('POST');
+        return in_array($request->getPathInfo(), ['/admin/login', '/login']) && $request->isMethod('POST');
     }
 
     public function authenticate(Request $request): Passport
@@ -57,9 +57,10 @@ class LoginFormAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+
         return new RedirectResponse(
             $request->getPathInfo() === '/admin/login' ?
-            $this->router->generate('app_backoffice_login') : $this->router->generate('app_frontoffice_login')
+                $this->router->generate('app_backoffice_login') : $this->router->generate('app_frontoffice_login')
         );
     }
 }

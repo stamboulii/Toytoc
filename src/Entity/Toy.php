@@ -41,11 +41,6 @@ class Toy
     #[ORM\OneToMany(mappedBy: 'toy', targetEntity: Picture::class, cascade: ['persist', 'remove'])]
     private ArrayCollection|Collection $pictures;
 
-    #[ORM\ManyToOne(inversedBy: 'toys')]
-    private ?Order $orderr = null;
-
-   
-
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -140,18 +135,4 @@ class Toy
 
         return $this;
     }
-
-    public function getOrderr(): ?Order
-    {
-        return $this->orderr;
-    }
-
-    public function setOrderr(?Order $orderr): self
-    {
-        $this->orderr = $orderr;
-
-        return $this;
-    }
-
-   
 }

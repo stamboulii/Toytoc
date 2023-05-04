@@ -33,7 +33,7 @@ security:
                 path: app_backoffice_logout
                 target: app_backoffice_login
         main:
-            pattern: ^/home
+            pattern: ^/
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
@@ -53,7 +53,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-       - { path: ^/home/secured, roles: ROLE_PARENT }
+       - { path: ^/secured, roles: ROLE_PARENT }
        - { path: ^/admin/secured, roles: ROLE_ADMIN }
 
 when@test:
