@@ -37,8 +37,8 @@ class Shipping
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $address = null;
 
-    #[ORM\OneToOne(mappedBy: 'shipping', targetEntity: Order::class, cascade: ['persist'])]
-    private ?Order $order = null;
+    #[ORM\OneToOne(mappedBy: 'shipping', targetEntity: Toys_order::class, cascade: ['persist'])]
+    private ?Toys_order $order = null;
 
     public function getId(): ?int
     {
@@ -93,12 +93,12 @@ class Shipping
         return $this;
     }
 
-    public function getOrder(): ?Order
+    public function getOrder(): ?Toys_order
     {
         return $this->order;
     }
 
-    public function setOrder(?Order $order): self
+    public function setOrder(?Toys_order $order): self
     {
         $this->order = $order;
 

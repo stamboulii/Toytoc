@@ -3,14 +3,13 @@
 namespace App\Controller\Backoffice;
 
 use App\Entity\ContactUs;
-use App\Entity\User;
 use App\Repository\OrderRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Order;
+use App\Entity\Toys_order;
 use App\Repository\ContactUsRepository;
 use App\Repository\UserRepository;
 
@@ -23,11 +22,11 @@ class HomeController extends AbstractController
         $contact = $contactUsRepository->findAll();
         // $users =  ['user' => $this->getUser()->getId(), 'roles' => User::ROLE_PARENT];
         $userCount = count($userRepository->findAll());
-        // $orderCount = count($orderRepository->findAll());
+        $orderCount = count($orderRepository->findAll());
         return $this->render('backoffice/home/index.html.twig', [
             'controller_name' => 'HomeController',
             'curr_nav' => 'user',
-            // 'orderCount' => $orderCount,
+            'orderCount' => $orderCount,
             'messages' => $contact,
             'userCount' => $userCount,
 

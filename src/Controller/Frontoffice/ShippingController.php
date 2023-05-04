@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Order;
+use App\Entity\Toys_order;
 use App\Repository\OrderRepository;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Toy;
@@ -28,8 +28,8 @@ class ShippingController extends AbstractController
     public function add(OrderRepository $orderRepository, Request $request): Response
     {
         $toys  = array_map(fn(Toy $toy): int => $toy->getId(), $request->getSession()->get('card', []));
-        $order = (new Order())->setBuyer($this->getUser())->setToys($toys);
-        $orderRepository->save($order, true);
+        $Toys_order = (new Toys_order())->setBuyer($this->getUser())->setToys($toys);
+        $orderRepository->save($Toys_order, true);
         $request->getSession()->remove('card');
 
         return $this->redirectToRoute('app_front', [], Response::HTTP_SEE_OTHER);

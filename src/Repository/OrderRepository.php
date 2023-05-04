@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Order;
+use App\Entity\Toys_order;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Toy;
 
 /**
- * @extends ServiceEntityRepository<Order>
+ * @extends ServiceEntityRepository<Toys_order>
  *
- * @method Order|null find($id, $lockMode = null, $lockVersion = null)
- * @method Order|null findOneBy(array $criteria, array $orderBy = null)
- * @method Order[]    findAll()
- * @method Order[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Toys_order|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Toys_order|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Toys_order[]    findAll()
+ * @method Toys_order[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class OrderRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Order::class);
+        parent::__construct($registry, Toys_order::class);
     }
 
-    public function save(Order $entity, bool $flush = false): void
+    public function save(Toys_order $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -31,7 +31,7 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Order $entity, bool $flush = false): void
+    public function remove(Toys_order $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
