@@ -26,16 +26,20 @@ class ToyType extends AbstractType
                     return $repository->createQueryBuilder('e')
                                       ->orderBy('e.name');
                 }
-            ])
-            ->add('user', EntityType::class, [
-                'class'         => User::class,
-                'query_builder' => function (UserRepository $repository): QueryBuilder {
-                    return $repository->createQueryBuilder('e')
-                                      ->where('e.roles LIKE :roles')
-                                      ->setParameter('roles', '%' . User::ROLE_PARENT . '%')
-                                      ->orderBy('e.firstName');
-                }
-            ])
+            ]);
+
+            if ($options['connected_user'] === null) {
+                $builder->add('user', EntityType::class, [
+                    'class'         => User::class,
+                    'query_builder' => function (UserRepository $repository): QueryBuilder {
+                        return $repository->createQueryBuilder('e')
+                                          ->where('e.roles LIKE :roles')
+                                          ->setParameter('roles', '%' . User::ROLE_PARENT . '%')
+                                          ->orderBy('e.firstName');
+                    }
+                ]);
+            }
+            $builder
             ->add('weight', TextType::class)
             ->add('price', TextType::class)
             ->add('state', TextType::class)
@@ -52,6 +56,7 @@ class ToyType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Toy::class,
+            'connected_user' => null
         ]);
     }
 }

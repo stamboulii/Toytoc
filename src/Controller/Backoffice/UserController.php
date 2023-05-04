@@ -4,6 +4,7 @@ namespace App\Controller\Backoffice;
 
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +39,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader): Response
+    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader,UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user = User::newParent());
         $form->handleRequest($request);
@@ -46,6 +47,9 @@ class UserController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
+            $password =$form['password']->getData();
+            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
@@ -59,7 +63,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository,FileUploader $fileUploader): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository,FileUploader $fileUploader,UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -68,6 +72,9 @@ class UserController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
+            $password =$form['password']->getData();
+            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
@@ -86,6 +93,6 @@ class UserController extends AbstractController
             $userRepository->remove($user, true);
         }
 
-        return $this->redirectToRoute('app_backoffice_user_delete', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_backoffice_user_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -44,10 +44,10 @@
             <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                  id="navbar-vertical">
                 <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                    {# {% for category in app.categories %}
+                    {% for category in categories_side_bar() %}
                         <a href="{{ path('app_frontoffice_toys',{'id': category.id}) }}"
                          class="nav-item nav-link">{{category.name}}</a>
-                        {% endfor %} #}
+                        {% endfor %}
                 </div>
             </nav>
         </div>

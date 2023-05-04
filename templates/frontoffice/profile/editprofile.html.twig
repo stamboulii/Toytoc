@@ -1,14 +1,16 @@
+
 {% extends 'frontoffice/profile/profile.html.twig' %}
 
-{% block body %}
-    <div class="ibox">
-        <div class="ibox-head">
-            <div class="ibox-title">Edit Parent</div>
-            <div class="ibox-tools">
-                <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
-            </div>
-        </div>
-        <div class="ibox-body">
+{% block content %}
+
+<div class="container-fluid py-5">
+
+<div class="tab-content">
+<div class="tab-pane fade" id="tab-pane-23535">
+    <h4 class="mb-3">edit</h4>
+        <div class="row">
+            <div class="col-md-6">
+            <div class="ibox-body">
             {{ form_start(form) }}
             <div class="row">
                 <div class="col-sm-6 form-group">
@@ -31,22 +33,22 @@
                     {{ form_row(form.birthday, {'attr': {'class': 'form-control'}}) }}
                     {{ form_row(form.picture, {'attr': {'class': 'form-control'}}) }}
                 </div>
-                 <div class="col-sm-6 form-group">
+                <div class="col-sm-6 form-group">
                     {{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-10 ml-sm-auto">
                         <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Save') }}</button>
-                        <a href="{{ path('app_backoffice_user_index') }}">
+                        <a href="{{ path('app_frontoffice_profile') }}">
                             <span class="btn btn-warning">Annuler</span></a>
                     </div>
                 </div>
-
-
-
             </div>
             {{ form_end(form) }}
-
+            </div>
+            </div>
         </div>
-    </div>
+</div>
+</div>
+</div>
 {% endblock %}

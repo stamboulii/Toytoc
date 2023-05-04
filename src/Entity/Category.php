@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class Category
 {
-    use Trait\CreatedUpdatedAtTrait;
+    use Traits\CreatedUpdatedAtTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

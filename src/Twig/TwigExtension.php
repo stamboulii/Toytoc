@@ -10,13 +10,14 @@ use Twig\Extension\AbstractExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Helper\HttpQueryHelper;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Routing\RouterInterface;
 
 final class TwigExtension extends AbstractExtension implements EventSubscriberInterface
 {
     private Request $request;
 
-    public function __construct(private readonly RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router, private readonly CategoryRepository $categoryRepository)
     {
     }
 
@@ -25,6 +26,7 @@ final class TwigExtension extends AbstractExtension implements EventSubscriberIn
         return [
             new TwigFunction('order_by', [$this, 'getOrderBy'], ['is_safe' => ['html']]),
             new TwigFunction('order_query_attributes', [$this, 'getOrderQueryAttributes']),
+            new TwigFunction('categories_side_bar', [$this, 'categoriesSideBar']),
         ];
     }
 
@@ -36,6 +38,11 @@ final class TwigExtension extends AbstractExtension implements EventSubscriberIn
         return [
             KernelEvents::REQUEST => 'onKernelRequest',
         ];
+    }
+
+    public function categoriesSideBar(): array
+    {
+        return $this->categoryRepository->findBy([], ['name' => 'ASC'], 10);
     }
 
     /**

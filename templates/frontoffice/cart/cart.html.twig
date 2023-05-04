@@ -15,7 +15,7 @@
                     <th>Remove</th>
                 </tr>
                 </thead>
-                <tbody class="align-middle">
+                <tbody id="tbody-table" class="align-middle">
                 {% for toy in app.session.get('card', []) %}
                 <tr id="line-{{toy.id}}">
                     {# <td class="align-middle"><img src="{{ asset('upload/img/toys/' ~ toy.pictures|first.path) }}" alt="" style="width: 50px;"> {{toy.state}}</td> #}
@@ -23,6 +23,8 @@
                     <td class="align-middle"><button data-element="#line-{{toy.id}}" class="btn btn-sm btn-primary add-remove-card" 
                     href="{{path('app_frontoffice_cartremove', {'id' : toy.id})}}"><i class="fa fa-times"></i></button></td>
                 </tr>
+                {% else %}
+                <tr><td colspan="2">Votre panier est vide!</td></tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -34,22 +36,21 @@
                     <h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">#</h6>
-                    </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
                         <h5 class="font-weight-bold">{{ total }}</h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+
+                    <a href="{{path('app_shipping')}}" class="btn btn-block btn-primary my-3 py-3">Proceed To Shipping</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% block shipping %}
+{% endblock %}
 <!-- Cart End -->
 
 {% endblock %}

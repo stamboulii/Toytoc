@@ -6,7 +6,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-success color-white widget-stat">
                             <div class="ibox-body">
-                                <h2 class="m-b-5 font-strong">#</h2>
+                                <h2 class="m-b-5 font-strong">1</h2>
                                 <div class="m-b-5">NEW ORDERS</div><i class="ti-shopping-cart widget-stat-icon"></i>
                               
                             </div>
@@ -25,49 +25,58 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="ibox bg-danger color-white widget-stat">
                             <div class="ibox-body">
-                                <h2 class="m-b-5 font-strong">#</h2>
+                                <h2 class="m-b-5 font-strong">{{userCount}}</h2>
                                 <div class="m-b-5">All USERS</div><i class="ti-user widget-stat-icon"></i>
                         
                             </div>
                         </div>
                     </div>
                 </div>
-                 <div class="ibox">
-                            <div class="ibox-head">
-                                <div class="ibox-title">Messages</div>
-                            </div>
+                  <table class="table table-striped table-bordered table-hover" id="example-table">
+                    <thead>
+                    <tr>
+                        <th class="ibox-title">Messages</th>
+                        <th width="240px">Action</th>
+                    </tr>
+                    </thead>
+    
                             <div class="ibox-body">
+                            {% for message in messages %}
+                           <tbody>
+                            <tr>
+                               
                                 <ul class="media-list media-list-divider m-0">
-                                    <li class="media">
-                                        
+                                <td>
+                                    <li class="media"> 
                                         <div class="media-body">
-                                            <div class="media-heading">Jeanne Gonzalez <small class="float-right text-muted"></small></div>
-                                            <div class="font-13">Lorem Ipsum is simply dummy text of the printing and typesetting.</div>
+                                            <div class="media-heading">{{message.name}} <small class="float-right text-muted"></small></div>
+                                            <div class="font-13">{{message.subject}}</div>
                                         </div>
                                     </li>
-                                    <li class="media">
-                                        
-                                        <div class="media-body">
-                                            <div class="media-heading">Becky Brooks <small class="float-right text-muted"></small></div>
-                                            <div class="font-13">Lorem Ipsum is simply dummy text of the printing and typesetting.</div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        
-                                        <div class="media-body">
-                                            <div class="media-heading">Frank Cruz <small class="float-right text-muted"></small></div>
-                                            <div class="font-13">Lorem Ipsum is simply dummy text of the printing and typesetting.</div>
-                                        </div>
-                                    </li>
-                                    <li class="media">
-                                        
-                                        <div class="media-body">
-                                            <div class="media-heading">Connor Perez <small class="float-right text-muted"></small></div>
-                                            <div class="font-13">Lorem Ipsum is simply dummy text of the printing and typesetting.</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                                </td>
+                                <td>
+                            <form method="post" action="{{ path('contactUs_delete', {'id': message.id}) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+                                <a
+                                        class="btn btn-outline-success"
+                                        href="{{ path('contactUs_detail', {'id': message.id}) }}">
+                                    Details
+                                </a>
+
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
+                                <button class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </td>
+                        </tr>
+                             {% endfor %}
+                         </ul>
+                    </tbody>
+                </table>
+                               
+         </div>
    </div>
+
+   {% block message %}
+   {% endblock %}
 {% endblock %}

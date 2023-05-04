@@ -8,6 +8,7 @@ use App\Helper\PaginatorHelper;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
 
 /**
  * @extends ServiceEntityRepository<Toy>
@@ -42,12 +43,21 @@ class ToyRepository extends ServiceEntityRepository
         }
     }
 
-    public function getToysByCategory( Category $category): array
+    public function getToysByCategory(Category $category): array
     {
         return $this->createQueryBuilder('t')
-            ->innerJoin('t.category', 'c')
-            ->where('c.id = :categoryId')
-            ->setParameter('categoryId', $category->getId())
+            ->where('t.category = :categoryId')
+            ->setParameter('categoryId', $category)
+            ->setMaxResults(6)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getToysByUser(User $user): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.user = :userId')
+            ->setParameter('userId', $user)
             ->setMaxResults(6)
             ->getQuery()
             ->getResult();

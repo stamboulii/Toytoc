@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+
 
 class   UserType extends AbstractType
 {
@@ -38,6 +40,9 @@ class   UserType extends AbstractType
                 'required' => false,
             ])
             ->add('birthday', BirthdayType::class, [
+                'required' => false,
+            ])
+            ->add('password', PasswordType::class, [
                 'required' => false,
             ])
             ->add('picture', FileType::class, [

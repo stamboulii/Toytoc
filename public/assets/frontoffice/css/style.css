@@ -2974,10 +2974,6 @@ input[type="button"].btn-block {
   }
 }
 
-.fade:not(.show) {
-  opacity: 0;
-}
-
 .collapse:not(.show) {
   display: none;
 }
@@ -3990,10 +3986,6 @@ input[type="button"].btn-block {
   flex-basis: 0;
   flex-grow: 1;
   text-align: center;
-}
-
-.tab-content > .tab-pane {
-  display: none;
 }
 
 .tab-content > .active {

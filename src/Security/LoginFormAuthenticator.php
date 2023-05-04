@@ -58,7 +58,8 @@ class LoginFormAuthenticator extends AbstractAuthenticator
     {
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         return new RedirectResponse(
-            $this->router->generate('app_backoffice_login')
+            $request->getPathInfo() === '/admin/login' ?
+            $this->router->generate('app_backoffice_login') : $this->router->generate('app_frontoffice_login')
         );
     }
 }

@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Toy
 {
-    use Trait\CreatedUpdatedAtTrait;
+    use Traits\CreatedUpdatedAtTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -40,6 +40,11 @@ class Toy
 
     #[ORM\OneToMany(mappedBy: 'toy', targetEntity: Picture::class, cascade: ['persist', 'remove'])]
     private ArrayCollection|Collection $pictures;
+
+    #[ORM\ManyToOne(inversedBy: 'toys')]
+    private ?Order $orderr = null;
+
+   
 
     public function __construct()
     {
@@ -111,18 +116,6 @@ class Toy
         return $this;
     }
 
-//    public function getPicture(): ?string
-//    {
-//        return $this->picture;
-//    }
-
-//    public function setPicture(?string $picture): self
-//    {
-//        $this->picture = $picture;
-//
-//        return $this;
-//    }
-
     /**
      * @return Collection<int, Picture>
      */
@@ -147,4 +140,18 @@ class Toy
 
         return $this;
     }
+
+    public function getOrderr(): ?Order
+    {
+        return $this->orderr;
+    }
+
+    public function setOrderr(?Order $orderr): self
+    {
+        $this->orderr = $orderr;
+
+        return $this;
+    }
+
+   
 }

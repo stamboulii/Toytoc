@@ -18,8 +18,6 @@ class RegisterController extends AbstractController
     #[Route('/register', name: 'app_frontoffice_register', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function index(Request $request,UserRepository $userRepository,FileUploader $fileUploader): Response
     {
-
-
         $form = $this->createForm(RegistrationFormType::class, $user = User::newParent());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
