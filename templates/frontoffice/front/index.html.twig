@@ -11,7 +11,7 @@
                 <p class="text-right">{{ category.toys.count }}</p>
                 <a href="{{ path('app_frontoffice_toys',{'id': category.id}) }}"
                  class="cat-img position-relative overflow-hidden mb-3">
-                    <img class="img-fluid" src="{{ asset('assets/frontoffice/img/logo.jpg') }}" alt="">
+                    <img class="img-fluid" src="{{ asset('upload/img/toys/' ~ category.picture) }}" alt="">
                 </a>
                 <h5 class="font-weight-semi-bold m-0">{{ category.name }}</h5>
             </div>

@@ -2,32 +2,36 @@
 
 {% block message %}
 
-<div class="col-lg-9 col-md-8" id="message-container">
-                        <div class="ibox" id="mailbox-container">
-                            <div class="mailbox-header d-flex justify-content-between" style="border-bottom: 1px solid #e8e8e8;">
-                                <div>
-                                    <h5 class="inbox-title">{{message.subject}}</h5>
-                                    <div class="m-t-5 font-13">
-                                        <span class="font-strong">{{message.name}}</span>
-                                        <a class="text-muted m-l-5" href="javascript:;">{{message.email}}</a>
-                                    </div>
+                  <div class="col-md-6">
+                        <div class="ibox">
+                            <div class="ibox-head">
+                                <div class="ibox-title">Message details</div>
+                                <div class="ibox-tools">
+                                    <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                                 </div>
-                                <div class="inbox-toolbar m-l-20">
-                                <form method="post" action="{{ path('contactUs_delete', {'id': message.id}) }}"
+                            </div>
+                            <div class="ibox-body">
+                                
+                                <div class="card" style="width:320px;">
+                                    <div class="card-header">
+                                        <h6 class="m-0">{{message.name}}</h6><small class="text-muted">{{message.email}}</small>
+                                    </div>
+                                     <div class="card-header">
+                                        <h6 class="m-0">{{message.subject}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">{{message.message}}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            
+                            <form method="post" action="{{ path('contactUs_delete', {'id': message.id}) }}"
                                   onsubmit="return confirm('Are you sure you want to delete this item?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ message.id) }}">
-                                    <button class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
-                            </form>
-                                </div>
+                                 <button class="btn btn-default btn-sm" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></button>
+                            </form>                                        </div>
+                                    </div>
                             </div>
-                            <div class="mailbox-body">
-                                <p>{{message.message}}</p>                              
-                            </div>
-                            
                         </div>
                     </div>
-
-
 
 {% endblock %}
 

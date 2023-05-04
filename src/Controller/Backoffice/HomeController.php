@@ -35,14 +35,15 @@ class HomeController extends AbstractController
     }
 
     #[Route('/{id}/detail', name: 'contactUs_detail', methods: ['GET', 'POST'])]
-    public function edit($id,ContactUsRepository $contactUsRepository): Response
+    public function edit($id,ContactUsRepository $contactUsRepository,UserRepository $userRepository): Response
     {
         $contact = $contactUsRepository->findAll();
         $message = $contactUsRepository->find($id);
-        
+        $userCount = count($userRepository->findAll());
         return $this->render('frontoffice/contact/contactusdetail.html.twig', [
             'messages' => $contact,
             'message' => $message,
+            'userCount' => $userCount,
            
         ]);
     }

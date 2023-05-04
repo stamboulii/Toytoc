@@ -21,6 +21,10 @@ use Symfony\Component\Console\Input\InputArgument;
 #[Route('/secured/admin', name: 'app_backoffice_admin_')]
 class AdminController extends AbstractController
 {
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher )
+    {
+        
+    }
     #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request): Response
     {
@@ -42,7 +46,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader,UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, UserRepository $userRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user = User::newAdmin());
         $form->handleRequest($request);
@@ -51,8 +55,7 @@ class AdminController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
-            $password =$form['password']->getData();
-            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+            $user->setPassword($this->passwordHasher->hashPassword($user,$user->getPassword()));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_admin_index', [], Response::HTTP_SEE_OTHER);
@@ -75,8 +78,7 @@ class AdminController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
-            $password =$form['password']->getData();
-            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+            $user->setPassword($this->passwordHasher->hashPassword($user,$user->getPassword()));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_backoffice_admin_index', [], Response::HTTP_SEE_OTHER);

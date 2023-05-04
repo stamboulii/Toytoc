@@ -18,6 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/secured/user', name: 'app_backoffice_user_')]
 class UserController extends AbstractController
 {
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher )
+    {
+    }
+
     #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(UserRepository $userRepository, Request $request): Response
     {
@@ -47,8 +51,7 @@ class UserController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
-            $password =$form['password']->getData();
-            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+            $user->setPassword($this->passwordHasher->hashPassword($user,$user->getPassword()));
 
             $userRepository->save($user, true);
 
@@ -72,8 +75,7 @@ class UserController extends AbstractController
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
-            $password =$form['password']->getData();
-            $user->setPassword($this->$passwordHasher->hashPassword($user, $password));
+            $user->setPassword($this->passwordHasher->hashPassword($user,$user->getPassword()));
 
             $userRepository->save($user, true);
 

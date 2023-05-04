@@ -13,15 +13,12 @@ use App\Repository\OrderRepository;
 use App\Repository\ShippingRepository;
 use App\Repository\ToyRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\Persistence\ManagerRegistry;
 
 
 class ShippingController extends AbstractController
 {
-    protected RequestStack $requestStack;
-    public function __construct(RequestStack $requestStack)
-    {
-        $this->requestStack = $requestStack;
-    }
+    public function __construct(private ManagerRegistry $doctrine) {}
     #[Route('/shipping', name: 'app_shipping')]
     public function index(CartService $cartservice): Response
     {
@@ -39,7 +36,20 @@ class ShippingController extends AbstractController
         $order = new Order();
         $cards = $request->getSession()->get('card', []);
         foreach ($cards as $card){
-           $verif= $toyRepository -> getRepository(Toy::class)->find($card[$toy->getId()]);
+           
+         //$verif= $toyRepository ->getRepository(Toy::class)->find($card[$toy->getId()]);
+        //  $entityManager = $this->doctrine->getManager();
+        // $toyRepository = $entityManager->getRepository(Toy::class);
+        // $id=$card.$toy->getId();
+        // $verif=$toyRepository->findBy(['id'=> $id]);
+        // $verif = isset($card[$toy->getId()]) ? $card[$toy->getId()] : null;
+        $toyId = $toy->getId();
+        if (is_array($card) && array_key_exists($toyId, $card)) {
+            $verif = $card[$toyId];
+        } else {
+            $verif = null;
+        }
+
            if(null!==$verif){ $order ->addToy($card[$toy->getId()]);}
            
         }
