@@ -10,20 +10,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 class RegisterController extends AbstractController
 {
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher )
+    {
+        
+    }
     #[Route('/register', name: 'app_frontoffice_register', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function index(Request $request,UserRepository $userRepository,FileUploader $fileUploader): Response
     {
+
         $form = $this->createForm(RegistrationFormType::class, $user = User::newParent());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $image */
             $image = $form['picture']->getData();
             $user->setPicture($fileUploader->upload($image));
+            $user->setPassword($this->passwordHasher->hashPassword($user,$user->getPassword()));
             $userRepository->save($user, true);
 
             return $this->redirectToRoute('app_front', [], Response::HTTP_SEE_OTHER);

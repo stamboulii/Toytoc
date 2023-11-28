@@ -36,6 +36,7 @@ class HomeController extends AbstractController
     #[Route('/{id}/detail', name: 'contactUs_detail', methods: ['GET', 'POST'])]
     public function edit($id,ContactUsRepository $contactUsRepository,UserRepository $userRepository): Response
     {
+        $orderCount = count($orderRepository->findAll());
         $contact = $contactUsRepository->findAll();
         $message = $contactUsRepository->find($id);
         $userCount = count($userRepository->findAll());
@@ -43,6 +44,7 @@ class HomeController extends AbstractController
             'messages' => $contact,
             'message' => $message,
             'userCount' => $userCount,
+            'orderCount' => $orderCount,
            
         ]);
     }

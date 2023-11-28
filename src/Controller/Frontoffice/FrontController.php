@@ -16,7 +16,7 @@ use App\Repository\OrderRepository;
 
 
 class FrontController extends AbstractController
-{
+{   
     #[Route('/', name: 'app_front')]
     public function index(CategoryRepository $categoryRepository): Response
     {

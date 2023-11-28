@@ -344,7 +344,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Order>
+     * @return Collection<int, Toys_order>
      */
     public function getOrders(): Collection
     {
